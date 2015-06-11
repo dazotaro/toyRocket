@@ -13,6 +13,10 @@
 #include <glm/gtc/matrix_transform.hpp>     // glm::rotate, glm::translate
 #include <glm/gtx/transform2.hpp>           // glm::rotate, glm::translate
 
+
+namespace JU
+{
+
 /**
 * @brief Default Constructor
 *
@@ -213,3 +217,4 @@ std::ostream & operator<<(std::ostream &out, const Object3D &rhs)
     return out;
 }
 
+} /* namespace JU */

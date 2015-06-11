@@ -16,6 +16,9 @@
 #include <string>
 #include <map>
 
+namespace JU
+{
+
 // FORWARD DECLARATIONS
 class GLSLProgram;
 
@@ -37,5 +40,7 @@ class TextureManager
         static TextureMap texture_map_;  //!< Handle to the texture
         static int num_tex_bound_;                          //!< Number of textures already bound to some GL_ACTIVEX
 };
+
+} // namespace JU
 
 #endif /* TEXTUREMANAGER_HPP_ */

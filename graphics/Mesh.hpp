@@ -12,6 +12,8 @@
 #include <vector>
 #include <glm/glm.hpp>  // glm vector and matrix types
 
+namespace JU
+{
 
 /**
  * @brief      Contains all information of a Mesh.
@@ -189,5 +191,7 @@ class Mesh
         TexCoordList    tex_coords_;    //!< List of vertex texture coordinates
         FaceList        faces_;         //!< List of faces
 };
+
+} // namespace JU
 
 #endif /* MESH_H_ */

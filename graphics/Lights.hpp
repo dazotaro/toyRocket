@@ -15,6 +15,9 @@
 #include <map>                  // std::map
 
 
+namespace JU
+{
+
 // FORWARD DECLARATIONS
 // --------------------
 class GLSLProgram;
@@ -118,5 +121,6 @@ class LightManager
         */
 };
 
+} // namespace JU
 
 #endif /* LIGHTS_HPP_ */

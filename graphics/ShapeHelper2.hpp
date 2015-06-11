@@ -17,6 +17,8 @@
 // Local includes
 #include "Mesh2.hpp"		// Mesh2
 
+namespace JU
+{
 
 class ShapeHelper2
 {
@@ -131,5 +133,6 @@ class ShapeHelper2
 							   JU::f32							radius);
 };
 
+} // namespace JU
 
 #endif /* SHAPEHELPER2_HPP_ */

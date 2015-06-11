@@ -8,6 +8,9 @@
 #include "CameraIntrinsic.hpp"
 #include <glm/gtc/matrix_transform.hpp>     // gluPerspective
 
+namespace JU
+{
+
 /**
 * @brief Non-Default Constructor
 *
@@ -52,3 +55,4 @@ void CameraIntrinsic::setAspectRatio(float aspect_ratio)
     perspective_  = glm::perspective(fovy_, aspect_ratio_, zNear_, zFar_);
 }
 
+} // namespace JU

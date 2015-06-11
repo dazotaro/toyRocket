@@ -8,6 +8,8 @@
 #include "NormalMapHelper.hpp"
 #include <glm/glm.hpp>          // glm vector and matrix types
 
+namespace JU
+{
 
 /**
 * @brief Converts height map to normal map
@@ -56,3 +58,4 @@ void convertHeightMapToNormalMap(int width, int height, int channels, float scal
     delete [] tmp_image;
 }
 
+} // namespace JU

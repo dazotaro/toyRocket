@@ -11,7 +11,7 @@
 // Global includes
 #include <cmath>	// sqrt, cos, acos, sin, atan
 
-namespace CoordinateHelper
+namespace JU { namespace CoordinateHelper
 {
 
 /*
@@ -34,4 +34,5 @@ void spherical2cartesian(float radius, float inclination, float azimuth, float &
     y = radius * cos(inclination);
 }
 
-} /* namespace CoordinateHelper */
+} // namespace CoordinateHelper
+} // namespace JU

@@ -11,6 +11,9 @@
 // Global include
 #include <iostream>     // std::cout
 
+namespace JU
+{
+
 /**
 * @brief Default Constructor
 */
@@ -209,4 +212,5 @@ void Mesh2::computeTangents()
         // Calculate handedness}
         float w = (glm::dot(glm::cross(normal, tan[index]), bit[index])) < 0.0f ? -1.0f : 1.0f;        vTangents_[index] = glm::vec4(tangent, w);
 	}
-}
+}
+} // namespace JU

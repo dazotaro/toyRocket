@@ -11,6 +11,9 @@
 #include "gl_core_4_2.h"                // glLoadGen generated header file
 #include "Mesh2.hpp"     // Mesh2
 
+namespace JU
+{
+
 /**
  * @brief      Mesh2 adapter to OpenGL.
  *
@@ -43,5 +46,7 @@ class GLMesh : public Mesh2
         GLuint *vbo_handles_;
         JU::uint8 num_buffers_;
 };
+
+} // namespace JU
 
 #endif /* GLMESH2_HPP_ */

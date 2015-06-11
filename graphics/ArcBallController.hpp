@@ -14,6 +14,8 @@
 // Local includes
 #include <JU/core/Defs.hpp>  // JU::uint32
 
+namespace JU
+{
 
 /**
  * @brief   Arc-ball (spherical) camera controller
@@ -49,4 +51,5 @@ class ArcBallController
         JU::f32 radius_delta_;    //!< Increase/decrease in radius accumulated since last update
 };
 
+} // namespace JU
 #endif /* ARCBALLCONTROLLER_HPP_ */

@@ -11,7 +11,8 @@
 #include <glm/glm.hpp>          // glm::vecX
 #include <unordered_map>        // std::unordered_map
 
-
+namespace JU
+{
 
 namespace GLSLShader
 {
@@ -23,7 +24,7 @@ namespace GLSLShader
         TESS_CONTROL,
         TESS_EVALUATION
     };
-};
+}
 
 
 
@@ -84,5 +85,7 @@ class GLSLProgram
         std::string             log_string_;
         HashMapSamplerTexUnit   hmSamplerToTexUnit_;
 };
+
+} // namespace JU
 
 #endif // GLSLPROGRAM_H

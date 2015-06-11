@@ -10,6 +10,9 @@
 
 #include <glm/glm.hpp>      // glm::mat4
 
+namespace JU
+{
+
 /**
  * @brief      Camera intrinsic parameters
  *
@@ -35,5 +38,7 @@ class CameraIntrinsic
         float zFar_;            //!< Far plane
         glm::mat4 perspective_; //!< Perspective matrix
 };
+
+} // namespace JU
 
 #endif /* CAMERAINTRINSIC_HPP_ */

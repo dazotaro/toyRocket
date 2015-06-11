@@ -20,6 +20,8 @@
 #include "Material.hpp"						// Material
 #include "GLSLProgramExt.hpp"				// extended setUniform helper functions
 
+namespace JU
+{
 
 /**
 * @brief Non-Default constructor
@@ -167,3 +169,5 @@ void GLMeshInstance::draw(const GLSLProgram &program, const glm::mat4 & model, c
 
     TextureManager::unbindAllTextures();
 }
+
+} // namespace JU

@@ -19,6 +19,8 @@
 #include <cmath>							// std::fabsf
 
 
+namespace JU
+{
 
 CameraThirdPerson::CameraThirdPerson(const CameraIntrinsic &camera_intrinsic,
                                      const Object3D &target,
@@ -190,6 +192,6 @@ void CameraThirdPerson::setAspectRatio(JU::f32 aspect_ratio)
     intrinsic_.setAspectRatio(aspect_ratio);
 }
 
-
+} // namespace JU
 
 

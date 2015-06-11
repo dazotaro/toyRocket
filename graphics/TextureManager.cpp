@@ -13,6 +13,9 @@
 #include <SOIL.h>                   // SOIL_load_image
 #include <iostream>                 // cout, endl
 
+namespace JU
+{
+
 // STATIC MMEMBER VARIABLES
 // ------------------------
 std::map<std::string, GLuint> TextureManager::texture_map_;  //!< Handle to the texture
@@ -146,4 +149,4 @@ void TextureManager::deleteAllTextures()
     }
 }
 
-
+} // namespace JU

@@ -9,6 +9,8 @@
 // Local include
 #include "DebugGlm.hpp"
 
+namespace JU
+{
 
 namespace debug
 {
@@ -66,5 +68,7 @@ void print(const char* string, const glm::mat4& mat)
 	std::printf(" %f, %f, %f, %f)\n", mat[0][3], mat[1][3], mat[2][3], mat[3][3]);
 }
 
-}
+} // namespace debug
+
+} // namespace JU
 

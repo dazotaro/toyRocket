@@ -8,15 +8,17 @@
 #include "GLMesh.hpp"
 #include <iostream>     // std::cout, std::endl
 #include "DebugGlm.hpp" // overloaded 'operator<<' for GLM classes
+
+namespace JU
+{
+
 /**
 * @brief Non-Default Constructor
 *
 * @param mesh Mesh2 object containing the data for this object
 */
-GLMesh::GLMesh(const Mesh2 &mesh) : Mesh2(mesh)
+GLMesh::GLMesh(const Mesh2 &mesh) : Mesh2(mesh), vao_handle_(0), vbo_handles_(nullptr), num_buffers_(0)
 {
-    vao_handle_  = 0;
-    vbo_handles_ = 0;	// NULL
 }
 
 /**
@@ -89,7 +91,7 @@ bool GLMesh::initVBOs(void)
 	const JU::uint8 TANGENT_VECTOR_SIZE  = 4;
 
     // Retrieve the data from the Mesh2 object
-	const std::string& 			 name			  = getName();
+	//const std::string& 			 name			  = getName();
 	const VectorPositions& 		 vPositions		  = getPositions();
 	const VectorNormals& 		 vNormals		  = getNormals();
 	const VectorTexCoords& 		 vTexCoords		  = getTexCoords();
@@ -233,3 +235,4 @@ void GLMesh::draw(void) const
     glDrawElements(GL_TRIANGLES, 3 * vTriangleIndices.size(), GL_UNSIGNED_SHORT, 0);
 }
 
+} // namespace JU

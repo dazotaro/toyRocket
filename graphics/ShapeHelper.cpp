@@ -4,6 +4,9 @@
 #include "ShapeHelper.hpp"  // ShapeHelper definitions
 #include "Mesh.hpp"         // Mesh class
 
+namespace JU
+{
+
 namespace Graphics
 {
 
@@ -972,4 +975,5 @@ static void sphericalMapping(const std::vector<glm::vec3> & positions,
 }
 */
 
-} // End Graphics namespace
+} // namespace Graphics
+} // namespace JU

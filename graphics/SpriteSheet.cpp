@@ -7,7 +7,8 @@
 
 #include "SpriteSheet.hpp"
 
-
+namespace JU
+{
 
 SpriteSheet::~SpriteSheet()
 {
@@ -23,3 +24,5 @@ bool SpriteSheet::init(const char* name, const char* filename, JU::uint32 num_ro
 
     return Texture::init(name, filename);
 }
+
+} // namespace JU

@@ -15,6 +15,9 @@
 #include <JU/core/Defs.hpp>  // Basic type typedefs
 #include <string>       // std::string
 
+namespace JU
+{
+
 class Texture
 {
     public:
@@ -37,5 +40,7 @@ class Texture
         std::string filename_;
         JU::uint32  handle_;
 };
+
+} // namespace JU
 
 #endif /* TEXTURE_HPP_ */

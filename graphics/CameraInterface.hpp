@@ -10,6 +10,9 @@
 
 #include <glm/glm.hpp>          // glm::mat4
 
+namespace JU
+{
+
 // Forward Declarations
 class Object3D;
 
@@ -26,5 +29,7 @@ class CameraInterface
 
         virtual ~CameraInterface() {}
 };
+
+} // namespace JU
 
 #endif /* CAMERAINTERFACE_HPP_ */

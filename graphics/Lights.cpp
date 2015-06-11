@@ -9,6 +9,9 @@
 #include "Lights.hpp"       // Header class for this source file
 #include "GLSLProgram.hpp"  // GLSLProgram
 
+namespace JU
+{
+
 /*
 void LightManager::addPositionalLight(const std::string& name, const LightPositional* plight)
 {
@@ -147,3 +150,4 @@ LightManager::~LightManager()
 }
 */
 
+} // namespace JU

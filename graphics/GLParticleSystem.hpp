@@ -17,6 +17,9 @@
 #include <glm/glm.hpp>          // glm::vec3/vec4
 #include <vector>               // std::vector
 
+namespace JU
+{
+
 class GLParticleSystem: public DrawInterface
 {
     public:
@@ -52,5 +55,7 @@ class GLParticleSystem: public DrawInterface
         std::vector<glm::vec3> positions_;  //!< Vector of positions
         std::vector<glm::vec4> colors_;     //!< Vector of colors
 };
+
+} // namespace JU
 
 #endif /* GLPARTICLESYSTEM_HPP_ */

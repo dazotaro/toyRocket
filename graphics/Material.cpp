@@ -8,6 +8,9 @@
 // Local includes
 #include "Material.hpp"
 
+namespace JU
+{
+
 // STATIC MEMBER VARIABLES
 // -----------------------
 bool MaterialManager::initialized_ = false;
@@ -77,6 +80,6 @@ void Material::print() const
 	std::printf("Specular = (%.4f, %.4f, %.4f) -- Shininess (%f)\n", ks_.r, ks_.g, ks_.b, shininess_);
 }
 
-
+} // namespace JU
 
 

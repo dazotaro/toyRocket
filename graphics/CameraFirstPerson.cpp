@@ -7,6 +7,9 @@
 
 #include "CameraFirstPerson.hpp"
 
+namespace JU
+{
+
 CameraFirstPerson::CameraFirstPerson(const CameraIntrinsic &camera_intrinsic, const Object3D &first_person) :
         Object3D(first_person), intrinsic_(camera_intrinsic)
 {
@@ -49,3 +52,5 @@ void CameraFirstPerson::setAspectRatio(float aspect_ratio)
 {
     intrinsic_.setAspectRatio(aspect_ratio);
 }
+
+} // namespace JU

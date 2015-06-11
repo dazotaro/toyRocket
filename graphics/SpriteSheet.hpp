@@ -15,6 +15,9 @@
 #include <string>       // std::string
 #include <JU/core/Defs.hpp>  // Basic data types
 
+namespace JU
+{
+
 class SpriteSheet : public Texture
 {
     public:
@@ -34,5 +37,7 @@ class SpriteSheet : public Texture
         JU::uint32 num_rows_;
         JU::uint32 num_cols_;
 };
+
+} // namespace JU
 
 #endif /* SPRITESHEET_HPP_ */

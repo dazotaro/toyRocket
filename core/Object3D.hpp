@@ -16,6 +16,8 @@
 #include "Defs.hpp"         // JU::f32
 
 
+namespace JU
+{
 
 /*!
   This class represents an object in 3D: its position and orientation.
@@ -75,5 +77,7 @@ class Object3D
         glm::vec3 y_axis_;      //!< left-to-right
         glm::vec3 z_axis_;      //!< bottom-up
 };
+
+} /* namespace JU */
 
 #endif /* OBJECT3D_HPP_ */

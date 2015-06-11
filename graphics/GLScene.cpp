@@ -7,7 +7,8 @@
 
 #include "GLScene.hpp"              // GLScene
 
-
+namespace JU
+{
 
 GLScene::GLScene(int width, int height) : width_(width), height_(height)
 {
@@ -100,3 +101,4 @@ const char* GLScene::getGLSLCurrentProgramString() const
     return current_program_iter_->first.c_str();
 }
 
+} // namespace JU

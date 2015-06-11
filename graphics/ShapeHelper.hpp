@@ -4,6 +4,8 @@
 #include <vector>       // stl vector and iterator
 #include "Mesh.hpp"     // Mesh, Mesh::Face
 
+namespace JU
+{
 namespace Graphics
 {
     enum TexMapMode
@@ -80,6 +82,6 @@ namespace Graphics
                          const Mesh::TexCoordList &tex_coords,
                          Mesh::TangentList        &tangents);
 
-} // End Graphics namespace
-
+} // namespace Graphics
+} // namespace JU
 #endif

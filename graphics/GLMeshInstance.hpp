@@ -17,6 +17,9 @@
 #include <string>               // std:string
 #include <map>                  // std::map
 
+namespace JU
+{
+
 // Forward Declarations
 class GLSLProgram;
 class GLMesh;
@@ -63,5 +66,7 @@ class GLMeshInstance : public DrawInterface
         std::string normal_map_texture_name_;
 
 };
+
+} // namespace JU
 
 #endif /* GLMESHINSTANCE_HPP_ */

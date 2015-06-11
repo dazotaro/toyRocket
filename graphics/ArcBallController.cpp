@@ -13,7 +13,8 @@
 #include <GL/freeglut.h>            // Glut
 #include <iostream>		            // std::cout and std::endl
 
-
+namespace JU
+{
 
 /**
 * @brief Non-Default Constructor
@@ -196,4 +197,4 @@ glm::vec3 ArcBallController::getPointOnSphere(JU::uint32 x, JU::uint32 y) const
     return point;
 }
 
-
+} // namespace JU

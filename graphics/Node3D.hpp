@@ -9,8 +9,11 @@
 #define NODE3D_HPP_
 
 #include <vector>                   // std::vector
-#include <JU/core/Object3D.hpp>     // Object3D
+#include "../core/Object3D.hpp"     // Object3D
 #include "DrawInterface.hpp"    // DrawInterface
+
+namespace JU
+{
 
 // FORWARD DECLARATIONS
 class Node3D;
@@ -42,5 +45,7 @@ class Node3D : public Object3D, public DrawInterface
         NodePointerList children_;              //!< All the children below this level
         bool visible_;                          //!< To draw or not draw, that is the question
 };
+
+} // namespace JU
 
 #endif /* NODE3D_HPP_ */

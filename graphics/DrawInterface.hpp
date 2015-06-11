@@ -11,6 +11,9 @@
 #include <glm/glm.hpp>      // glm::mat4
 #include <vector>           // std::vector
 
+namespace JU
+{
+
 // FORWARD DECLARATIONS
 class GLSLProgram;
 
@@ -31,5 +34,7 @@ class DrawInterface
 
 typedef std::vector<DrawInterface *> DrawList;
 typedef DrawList::const_iterator DrawListIterator;
+
+} // namespace JU
 
 #endif /* DRAWINTERFACE_HPP_ */

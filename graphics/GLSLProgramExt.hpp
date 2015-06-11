@@ -8,9 +8,11 @@
 #ifndef SRC_GLSLPROGRAMEXT_HPP_
 #define SRC_GLSLPROGRAMEXT_HPP_
 
-
 // Local includes
 #include "Lights.hpp"				// LightPositional, LightDirectional, LightSpotlight
+
+namespace JU
+{
 
 // Forward Declarations
 class Material;
@@ -54,5 +56,7 @@ class GLSLProgramExt
 		static void setUniform(const GLSLProgram& program, const LightDirectionalVector& lights);
 		static void setUniform(const GLSLProgram& program, const LightSpotlightVector&   lights);
 };
+
+} // namespace JU
 
 #endif /* SRC_GLSLPROGRAMEXT_HPP_ */

@@ -14,6 +14,8 @@
 #include <map>              // std::map
 #include <functional>       // std::function, std::hash
 
+namespace JU
+{
 
 bool vec3Compare(const glm::vec3& a, const glm::vec3& b)
 {
@@ -459,7 +461,7 @@ void ShapeHelper2::buildCylinder(std::string&  					name,
     }
 
     char buffer[100];
-    sprintf(buffer, "cylinder_%i\0", num_slices);
+    sprintf(buffer, "cylinder_%i", num_slices);
     name = std::string(buffer);
 
     vPositions.clear();
@@ -588,7 +590,7 @@ void ShapeHelper2::buildCone(std::string&  					name,
     }
 
     char buffer[100];
-    sprintf(buffer, "cone_%i\0", num_slices);
+    sprintf(buffer, "cone_%i", num_slices);
     name = std::string(buffer);
 
     vPositions.clear();
@@ -696,7 +698,7 @@ void ShapeHelper2::buildSphere(std::string&  				 name,
     }
 
     char buffer[100];
-    sprintf(buffer, "sphere_%i_%i\0", num_slices, num_stacks);
+    sprintf(buffer, "sphere_%i_%i", num_slices, num_stacks);
     name = std::string(buffer);
 
     vPositions.clear();
@@ -851,7 +853,7 @@ void ShapeHelper2::buildTorus(std::string&  				 name,
 {
     // CONSTANTS
     const glm::vec3 ORIGIN 		(0.0f, 0.0f, 0.0f);         // ORIGIN of the Mesh in Model Coordinates
-    const float Z_OFFSET 		(0.5f);                     // Distance from the ORIGIN to the top (or bottom)
+    //const float Z_OFFSET 		(0.5f);                     // Distance from the ORIGIN to the top (or bottom)
     const float TUBE_RADIUS		(radius);					// Radius of the tube
     const float TORUS_RADIUS  	(0.5f - TUBE_RADIUS);       // Distance from the origin (center of the torus) to the center of a section
     const float DELTA_THETA 	(2 * M_PI / num_slices1);  	// Increment of the angle from slice to slice
@@ -872,7 +874,7 @@ void ShapeHelper2::buildTorus(std::string&  				 name,
     }
 
     char buffer[100];
-    sprintf(buffer, "torus_%i_%i_%.2f\0", num_slices1, num_slices2, radius);
+    sprintf(buffer, "torus_%i_%i_%.2f", num_slices1, num_slices2, radius);
     name = std::string(buffer);
 
     vPositions.clear();
@@ -944,3 +946,5 @@ void ShapeHelper2::buildTorus(std::string&  				 name,
     	}
     }
 }
+
+} // namespace JU

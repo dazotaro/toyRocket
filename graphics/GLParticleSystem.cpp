@@ -9,6 +9,9 @@
 #include "GLParticleSystem.hpp"		// GLParticleSystem
 #include "GLSLProgram.hpp"			// GLSLProgram
 
+namespace JU
+{
+
 GLParticleSystem::GLParticleSystem() : max_particles_(0)
 {
     vao_handle_  = 0;
@@ -195,4 +198,4 @@ void GLParticleSystem::draw(const GLSLProgram &program, const glm::mat4 & model,
     glDrawArrays(GL_POINTS, 0, positions_.size());
 }
 
-
+} // namespace JU

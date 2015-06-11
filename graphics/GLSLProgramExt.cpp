@@ -10,6 +10,9 @@
 #include "GLSLProgram.hpp"			// GLSLProgram
 #include "Material.hpp"				// Material
 
+namespace JU
+{
+
 // STATIC CONST DECLARATIONS
 // -------------------------
 // Matrices
@@ -108,5 +111,5 @@ void GLSLProgramExt::setUniform(const GLSLProgram& program, const LightSpotlight
     }
 }
 
-
+} // namespace JU
 

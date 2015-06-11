@@ -8,6 +8,9 @@
 #include "Node3D.hpp"
 #include "GLSLProgram.hpp"  // GLSLProgram
 
+namespace JU
+{
+
 /**
 * @brief Default Constructor
 *
@@ -77,3 +80,4 @@ void Node3D::draw(const GLSLProgram &program, const glm::mat4 & model, const glm
     }
 }
 
+} // namespace JU

@@ -13,7 +13,8 @@
 #include "ImageHelper.hpp"       	// imageInvertVertically
 #include <cstdio>                   // std::printf
 
-
+namespace JU
+{
 
 Texture::~Texture()
 {
@@ -92,4 +93,4 @@ JU::uint32 Texture::getHandle() const
     return handle_;
 }
 
-
+} // namespace JU

@@ -14,7 +14,8 @@
 #include <string>           // std::string
 #include <JU/core/Defs.hpp>		// uint32
 
-
+namespace JU
+{
 
 class Mesh2
 {
@@ -101,5 +102,7 @@ class Mesh2
 		VectorVertexIndices   vVertexIndices_;  //!< Vector of face indices
 		VectorTriangleIndices vTriangleIndices_;//!< Vector of triangle indices
 };
+
+} // namespace JU
 
 #endif /* MESH2_HPP_ */

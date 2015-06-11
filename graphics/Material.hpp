@@ -15,6 +15,9 @@
 #include <string>			// std::string
 #include <unordered_map>	// std::unordered_map
 
+namespace JU
+{
+
 struct Material
 {
 	Material(JU::f32 ka_r = 0.0f, JU::f32 ka_g = 0.0f, JU::f32 ka_b = 0.0f,
@@ -54,6 +57,6 @@ class MaterialManager
 		static HashMapMaterial hpMaterials_;
 };
 
-
+} // namespace JU
 
 #endif /* MATERIAL_HPP_ */

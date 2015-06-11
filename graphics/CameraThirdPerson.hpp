@@ -11,12 +11,15 @@
 // Local includes
 #include "CameraInterface.hpp"      // CameraInterface parent class
 #include "CameraIntrinsic.hpp"      // CamneraIntrinsic object contained
-#include <JU/core/Object3D.hpp>     // Object3D
+#include "../core/Object3D.hpp"     // Object3D
 
 // Global includes
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <JU/core/Defs.hpp>              // JU::f32
+
+namespace JU
+{
 
 /**
  * @brief   Third-person camera type
@@ -55,5 +58,7 @@ class CameraThirdPerson : public CameraInterface, public Object3D
         JU::f32 azimuth_;                 //!< Azimuth angle in spherical coordinates
         JU::f32 inclination_;             //!< Inclination angle in spherical coordinates
 };
+
+} // namespace JU
 
 #endif /* CameraThirdPerson_HPP_ */

@@ -8,6 +8,9 @@
 #include <iostream>     // std::cout
 #include "Mesh.hpp"       // Mesh
 
+namespace JU
+{
+
 /**
 * @brief Non-Default Constructor
 *
@@ -357,3 +360,4 @@ void Mesh::export2OBJ(const char *filename) const
     fclose(file);
 }
 
+} // namespace JU

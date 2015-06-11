@@ -12,6 +12,9 @@
 #include <string>           // std::string
 #include "GLSLProgram.hpp"  // GLSLProgram
 
+namespace JU
+{
+
 // TYPEDEFS
 typedef std::map<std::string, GLSLProgram> GLSLProgramMap;
 typedef GLSLProgramMap::const_iterator GLSLProgramMapIter;
@@ -51,5 +54,7 @@ class GLScene
         int width_;                                //!< Width of the window
         int height_;                               //!< Height of the window
 };
+
+} // namespace JU
 
 #endif /* GLSCENE_HPP_ */

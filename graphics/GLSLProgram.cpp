@@ -10,6 +10,8 @@
 #include <iostream>
 #include <sys/stat.h>
 
+namespace JU
+{
 
 // MACROS
 #define DEBUG 0
@@ -474,3 +476,5 @@ bool GLSLProgram::fileExists( const std::string & fileName )
     ret = stat(fileName.c_str(), &info);
     return 0 == ret;
 }
+
+} // namespace JU

@@ -13,6 +13,9 @@
 #include <string>           // std::cout, std::endl
 #include <glm/glm.hpp>      // glm::vec3
 
+namespace JU
+{
+
 namespace debug
 {
 
@@ -51,5 +54,7 @@ void print(const char* string, const glm::mat4& mat);
 
 
 }
+
+} // namespace JU
 
 #endif /* DEBUGGLM_HPP_ */
