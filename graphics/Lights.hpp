@@ -22,7 +22,6 @@ namespace JU
 // --------------------
 class GLSLProgram;
 
-
 /**
  * @brief Positional Light
  *

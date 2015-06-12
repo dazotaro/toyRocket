@@ -10,11 +10,11 @@
 
 // Global includes
 #include <vector>			// std::vector
-#include <JU/core/Defs.hpp>		// Custom data types
 #include <string>			// std::string
 #include <glm/glm.hpp>		// glm::vec2, glm::vec3
 
 // Local includes
+#include "../core/Defs.hpp"	// Custom data types
 #include "Mesh2.hpp"		// Mesh2
 
 namespace JU

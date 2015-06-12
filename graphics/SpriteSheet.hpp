@@ -13,7 +13,7 @@
 
 // Global Includes
 #include <string>       // std::string
-#include <JU/core/Defs.hpp>  // Basic data types
+#include "../core/Defs.hpp"  // Basic data types
 
 namespace JU
 {

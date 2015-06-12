@@ -11,9 +11,9 @@
 // Local Includes
 #include "gl_core_4_2.h"                // glLoadGen generated header file
 #include "DrawInterface.hpp"    // DrawInterface
+#include "../core/Defs.hpp"			// JU::f32
 
 // Global Includes
-#include <JU/core/Defs.hpp>			// JU::f32
 #include <string>               // std:string
 #include <map>                  // std::map
 

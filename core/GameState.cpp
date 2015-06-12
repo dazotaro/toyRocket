@@ -9,7 +9,7 @@
 #include "GameState.hpp"
 
 // Global includes
-#include <JU/graphics/GLScene.hpp>
+#include "../graphics/GLScene.hpp"		// GLScene
 
 namespace JU
 {

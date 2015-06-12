@@ -26,7 +26,6 @@ class GameStateManager
         // Interface Functions
         virtual bool initialize();
         virtual void exit();
-		virtual bool changeState();
 		virtual bool draw();
 		void addState(const char* name, GameState* game_state);
 		bool changeState(const char* name);

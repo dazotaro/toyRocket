@@ -12,11 +12,11 @@
 #include "CameraInterface.hpp"      // CameraInterface parent class
 #include "CameraIntrinsic.hpp"      // CamneraIntrinsic object contained
 #include "../core/Object3D.hpp"     // Object3D
+#include "../core/Defs.hpp"         // JU::f32
 
 // Global includes
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <JU/core/Defs.hpp>              // JU::f32
 
 namespace JU
 {

@@ -8,10 +8,11 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
-class GLScene;
-
 namespace JU
 {
+
+// Forward Declarations
+class GLScene;
 
 class GameState
 {
