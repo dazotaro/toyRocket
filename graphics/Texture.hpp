@@ -9,7 +9,7 @@
 #define TEXTURE_HPP_
 
 // Local includes
-#include "gl_core_4_2.h"            // glLoadGen generated header file
+#include "gl_core_4_2.hpp"            // glLoadGen generated header file
 
 // Global includes
 #include "../core/Defs.hpp"  // Basic type typedefs
@@ -31,7 +31,7 @@ class Texture
         virtual bool load();
         virtual void bind() const
         {
-            glBindTexture(GL_TEXTURE_2D, handle_);
+        	gl::BindTexture(gl::TEXTURE_2D, handle_);
         }
         JU::uint32 getHandle() const;
 

@@ -9,7 +9,7 @@
 #define WINDOW_HPP_
 
 // Local includes
-#include "Defs.hpp"	// JU::uint32
+#include "../core/Defs.hpp"	// JU::uint32
 
 // Global Include
 #include <SDL2/SDL.h>		// SDL2

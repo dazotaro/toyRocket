@@ -7,7 +7,7 @@
 
 // Local Include
 #include "Window.hpp"
-#include "gl_core_4_2.h"				// OpenGL 4.2 Core Profile
+#include "gl_core_4_2.hpp"				// OpenGL 4.2 Core Profile
 
 
 namespace JU
@@ -71,15 +71,17 @@ bool Window::initialize(uint32 width, uint32 height)
 
     //------------------------------------
     // glLoadGen required initialization
-    int loaded = ogl_LoadFunctions();
-    if(loaded == ogl_LOAD_FAILED)
+    gl::exts::LoadTest loaded = gl::sys::LoadFunctions();
+    if(!loaded)
     {
         //Destroy the context and abort
         return 0;
     }
 
+    /*
     int num_failed = loaded - ogl_LOAD_SUCCEEDED;
     printf("Number of functions that failed to load: %i.\n",num_failed);
+    */
     //------------------------------------
 
 
@@ -101,22 +103,23 @@ bool Window::initialize(uint32 width, uint32 height)
      * 0 = immediate */
     SDL_GL_SetSwapInterval(0);
 
-    printf("GL Vendor: %s\n", glGetString(GL_VENDOR));
-    printf("GL Renderer: %s\n", glGetString(GL_RENDERER));
-    printf("GL version: %s\n", glGetString(GL_VERSION));
-    printf("GLSL version: %s\n", (char *) glGetString(GL_SHADING_LANGUAGE_VERSION));
+    /*
+    printf("GL Vendor: %s\n", glGetString(gl::VENDOR));
+    printf("GL Renderer: %s\n", glGetString(gl::RENDERER));
+    printf("GL version: %s\n", glGetString(gl::VERSION));
+    printf("GLSL version: %s\n", (char *) glGetString(gl::SHADING_LANGUAGE_VERSION));
 
     // How many active textures do we have access to?
     GLint data;
-    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &data);
+    glGetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &data);
     printf("Max Number of Combined Texture Units: %i\n", data);
-    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &data);
+    glGetIntegerv(gl::MAX_TEXTURE_IMAGE_UNITS, &data);
     printf("Max Number of Fragment Texture Units: %i\n", data);
-    glGetIntegerv(GL_MAX_VERTEX_TEXTURE_IMAGE_UNITS, &data);
+    glGetIntegerv(gl::MAX_VERTEX_TEXTURE_IMAGE_UNITS, &data);
     printf("Max Number of Vertex Texture Units: %i\n", data);
-    glGetIntegerv(GL_MAX_FRAGMENT_IMAGE_UNIFORMS, &data);
+    glGetIntegerv(gl::MAX_FRAGMENT_IMAGE_UNIFORMS, &data);
     printf("Max Number of Fragment Image Variables: %i\n", data);
-
+	*/
 
     return true;
 }

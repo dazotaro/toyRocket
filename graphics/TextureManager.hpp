@@ -9,7 +9,7 @@
 #define TEXTUREMANAGER_HPP_
 
 // Local Includes
-#include "gl_core_4_2.h"                // glLoadGen generated header file
+#include "gl_core_4_2.hpp"                // glLoadGen generated header file
 
 // Global Includes
 #include "../core/Defs.hpp"              // JU::uint32
@@ -38,7 +38,7 @@ class TextureManager
         typedef std::map<std::string, GLuint> TextureMap;
         typedef TextureMap::iterator TextureMapIterator;
         static TextureMap texture_map_;  //!< Handle to the texture
-        static int num_tex_bound_;                          //!< Number of textures already bound to some GL_ACTIVEX
+        static int num_tex_bound_;                          //!< Number of textures already bound to some gl::ACTIVEX
 };
 
 } // namespace JU

@@ -34,7 +34,7 @@ bool Texture::init(const char* name, const char* filename)
 
 bool Texture::load()
 {
-    glGenTextures(1, &handle_);
+    gl::GenTextures(1, &handle_);
 
 
     int width, height, channels;
@@ -45,11 +45,11 @@ bool Texture::load()
     switch (channels)
     {
         case 3:
-            mode = GL_RGB;
+            mode = gl::RGB;
             break;
 
         case 4:
-            mode = GL_RGBA;
+            mode = gl::RGBA;
             break;
 
         default:
@@ -60,25 +60,25 @@ bool Texture::load()
     // Flip the image vertically
     JU::imageInvertVertically(width, height, channels, image);
 
-    glBindTexture(GL_TEXTURE_2D, handle_);
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, image);
+    gl::BindTexture(gl::TEXTURE_2D, handle_);
+    gl::TexImage2D(gl::TEXTURE_2D, 0, mode, width, height, 0, mode, gl::UNSIGNED_BYTE, image);
 
-    GLfloat filtering_mode = GL_NEAREST;
-
-
-    //GLfloat filtering_mode = GL_LINEAR_MIPMAP_LINEAR;
-    //glGenerateMipmap(GL_TEXTURE_2D);
+    GLfloat filtering_mode = gl::NEAREST;
 
 
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering_mode);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering_mode);
+    //GLfloat filtering_mode = gl::LINEAR_MIPMAP_LINEAR;
+    //glGenerateMipmap(gl::TEXTURE_2D);
+
+
+    gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, filtering_mode);
+    gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, filtering_mode);
 
     /*
     float color[] = { 1.0f, 0.0f, 1.0f, 1.0f };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
+    gl::TexParameterfv(gl::TEXTURE_2D, gl::TEXTURE_BORDER_COLOR, color);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::REPEAT);
+    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::REPEAT);
     */
 
     SOIL_free_image_data(image);

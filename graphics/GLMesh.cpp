@@ -49,9 +49,9 @@ GLMesh::GLMesh(const std::string&				name,
 GLMesh::~GLMesh()
 {
 	// Delete the buffers
-    glDeleteBuffers(num_buffers_, vbo_handles_);
+    gl::DeleteBuffers(num_buffers_, vbo_handles_);
     // Delete the vertex array
-    glDeleteVertexArrays(1, &vao_handle_);
+    gl::DeleteVertexArrays(1, &vao_handle_);
     // Release the handles
     delete [] vbo_handles_;
 }
@@ -134,34 +134,34 @@ bool GLMesh::initVBOs(void)
     }
 
     // Create and bind VAO
-    glGenVertexArrays(1, &vao_handle_);
-    glBindVertexArray(vao_handle_);
+    gl::GenVertexArrays(1, &vao_handle_);
+    gl::BindVertexArray(vao_handle_);
 
     // Create Buffers
     vbo_handles_ = new GLuint[num_buffers_];
-    glGenBuffers(num_buffers_, vbo_handles_);
+    gl::GenBuffers(num_buffers_, vbo_handles_);
 
     // Position VBO
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    glBufferData(GL_ARRAY_BUFFER, num_vertices * POSITION_VECTOR_SIZE * sizeof(aPositions[0]), aPositions, GL_STATIC_DRAW);
-    glVertexAttribPointer(vbo_index, POSITION_VECTOR_SIZE, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-    glEnableVertexAttribArray(vbo_index);   // Vertex positions
+    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * POSITION_VECTOR_SIZE * sizeof(aPositions[0]), aPositions, gl::STATIC_DRAW);
+    gl::VertexAttribPointer(vbo_index, POSITION_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+    gl::EnableVertexAttribArray(vbo_index);   // Vertex positions
 
     ++vbo_index;
 
     // Texture Coordinates VBO
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    glBufferData(GL_ARRAY_BUFFER, num_vertices * TEX_VECTOR_SIZE * sizeof(aTexCoords[0]), aTexCoords, GL_STATIC_DRAW);
-    glVertexAttribPointer(vbo_index, TEX_VECTOR_SIZE, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-    glEnableVertexAttribArray(vbo_index);   // Vertex texture coordinates
+    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * TEX_VECTOR_SIZE * sizeof(aTexCoords[0]), aTexCoords, gl::STATIC_DRAW);
+    gl::VertexAttribPointer(vbo_index, TEX_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+    gl::EnableVertexAttribArray(vbo_index);   // Vertex texture coordinates
 
     ++vbo_index;
 
     // Normal VBO
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    glBufferData(GL_ARRAY_BUFFER, num_vertices * NORMAL_VECTOR_SIZE * sizeof(aNormals[0]), aNormals, GL_STATIC_DRAW);
-    glVertexAttribPointer(vbo_index, NORMAL_VECTOR_SIZE, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-    glEnableVertexAttribArray(vbo_index);   // Vertex normals
+    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * NORMAL_VECTOR_SIZE * sizeof(aNormals[0]), aNormals, gl::STATIC_DRAW);
+    gl::VertexAttribPointer(vbo_index, NORMAL_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+    gl::EnableVertexAttribArray(vbo_index);   // Vertex normals
 
     ++vbo_index;
 
@@ -179,10 +179,10 @@ bool GLMesh::initVBOs(void)
         }
 
         // Normal VBO
-        glBindBuffer(GL_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-        glBufferData(GL_ARRAY_BUFFER, num_vertices * TANGENT_VECTOR_SIZE * sizeof(aTangents[0]), aTangents, GL_STATIC_DRAW);
-        glVertexAttribPointer(vbo_index, TANGENT_VECTOR_SIZE, GL_FLOAT, GL_FALSE, 0, (GLubyte *)NULL);
-        glEnableVertexAttribArray(vbo_index);   // Vertex tangents
+        gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+        gl::BufferData(gl::ARRAY_BUFFER, num_vertices * TANGENT_VECTOR_SIZE * sizeof(aTangents[0]), aTangents, gl::STATIC_DRAW);
+        gl::VertexAttribPointer(vbo_index, TANGENT_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+        gl::EnableVertexAttribArray(vbo_index);   // Vertex tangents
 
         delete [] aTangents;
 
@@ -201,8 +201,8 @@ bool GLMesh::initVBOs(void)
     }
 
     // Allocate and initialize VBO for vertex indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_triangles * 3 * sizeof(aIndices[0]), aIndices, GL_STATIC_DRAW);
+    gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[vbo_index]);
+    gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, num_triangles * 3 * sizeof(aIndices[0]), aIndices, gl::STATIC_DRAW);
 
     // Clean up
     delete [] aPositions;
@@ -230,9 +230,9 @@ void GLMesh::draw(void) const
 {
 	const VectorTriangleIndices& vTriangleIndices = getTriangleIndices();
 
-    glBindVertexArray(vao_handle_);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_handles_[num_buffers_ - 1]);
-    glDrawElements(GL_TRIANGLES, 3 * vTriangleIndices.size(), GL_UNSIGNED_SHORT, 0);
+    gl::BindVertexArray(vao_handle_);
+    gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[num_buffers_ - 1]);
+    gl::DrawElements(gl::TRIANGLES, 3 * vTriangleIndices.size(), gl::UNSIGNED_SHORT, 0);
 }
 
 } // namespace JU

@@ -13,7 +13,7 @@
 
 // Global includes
 #include "../core/Defs.hpp"          // uint32
-#include "gl_core_4_2.h"                // glLoadGen generated header file
+#include "gl_core_4_2.hpp"                // glLoadGen generated header file
 #include <glm/glm.hpp>          // glm::vec3/vec4
 #include <vector>               // std::vector
 

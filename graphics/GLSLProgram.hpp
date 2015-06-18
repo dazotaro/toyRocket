@@ -3,7 +3,7 @@
 
 
 // Local Includes
-#include "gl_core_4_2.h"                // glLoadGen generated header file
+#include "gl_core_4_2.hpp"                // glLoadGen generated header file
 #include "../core/Defs.hpp"  // JU::uint32
 
 // Global Includes

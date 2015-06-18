@@ -9,7 +9,7 @@
 #define GAMEMANAGER_HPP_
 
 #include "GameStateManager.hpp" // GameStateManager
-#include "Window.hpp"           // Window
+#include "../graphics/Window.hpp"           // Window
 #include "InputManager.hpp"		// InputManager
 
 

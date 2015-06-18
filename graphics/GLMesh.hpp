@@ -8,7 +8,7 @@
 #ifndef GLMESH2_HPP_
 #define GLMESH2_HPP_
 
-#include "gl_core_4_2.h"                // glLoadGen generated header file
+#include "gl_core_4_2.hpp"                // glLoadGen generated header file
 #include "Mesh2.hpp"     // Mesh2
 
 namespace JU

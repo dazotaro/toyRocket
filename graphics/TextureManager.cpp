@@ -32,7 +32,7 @@ bool TextureManager::loadTexture(const std::string &texture_name, const std::str
     if (texture_map_.find(texture_name) == texture_map_.end())
     {
         GLuint tex_2d;
-        glGenTextures(1, &tex_2d);
+        gl::GenTextures(1, &tex_2d);
         texture_map_[texture_name] = tex_2d;
     }
 
@@ -45,11 +45,11 @@ bool TextureManager::loadTexture(const std::string &texture_name, const std::str
     switch (channels)
     {
     	case 3:
-			mode = GL_RGB;
+			mode = gl::RGB;
 			break;
 
 		case 4:
-			mode = GL_RGBA;
+			mode = gl::RGBA;
 			break;
 
 		default:
@@ -60,25 +60,25 @@ bool TextureManager::loadTexture(const std::string &texture_name, const std::str
     // Flip the image vertically
     JU::imageInvertVertically(width, height, channels, image);
 
-    glBindTexture(GL_TEXTURE_2D, texture_map_[texture_name]);
-    glTexImage2D(GL_TEXTURE_2D, 0, mode, width, height, 0, mode, GL_UNSIGNED_BYTE, image);
+    gl::BindTexture(gl::TEXTURE_2D, texture_map_[texture_name]);
+    gl::TexImage2D(gl::TEXTURE_2D, 0, mode, width, height, 0, mode, gl::UNSIGNED_BYTE, image);
 
-    GLfloat filtering_mode = GL_NEAREST;
-
-
-    //GLfloat filtering_mode = GL_LINEAR_MIPMAP_LINEAR;
-    //glGenerateMipmap(GL_TEXTURE_2D);
+    GLfloat filtering_mode = gl::NEAREST;
 
 
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filtering_mode);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filtering_mode);
+    //GLfloat filtering_mode = gl::LINEAR_MIPMAP_LINEAR;
+    //glGenerateMipmap(gl::TEXTURE_2D);
+
+
+    gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, filtering_mode);
+    gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, filtering_mode);
 
     /*
     float color[] = { 1.0f, 0.0f, 1.0f, 1.0f };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color);
+    gl::TexParameterfv(gl::TEXTURE_2D, gl::TEXTURE_BORDER_COLOR, color);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::REPEAT);
+    gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::REPEAT);
 	*/
 
     SOIL_free_image_data(image);
@@ -100,7 +100,7 @@ bool TextureManager::registerTexture(const std::string &texture_name, JU::uint32
 
 void TextureManager::bindTexture(const std::string &texture_name)
 {
-    glBindTexture(GL_TEXTURE_2D, texture_map_[texture_name]);
+    gl::BindTexture(gl::TEXTURE_2D, texture_map_[texture_name]);
 }
 
 
@@ -113,8 +113,8 @@ void TextureManager::bindTexture(const GLSLProgram &program, const std::string &
 
 void TextureManager::bindTexture(const GLSLProgram &program, JU::uint32 tex_id, const std::string &uniform_name)
 {
-    glActiveTexture(GL_TEXTURE0 + num_tex_bound_);
-    glBindTexture(GL_TEXTURE_2D, tex_id);
+    gl::ActiveTexture(gl::TEXTURE0 + num_tex_bound_);
+    gl::BindTexture(gl::TEXTURE_2D, tex_id);
 
     program.setUniform(uniform_name.c_str(), num_tex_bound_);
 
@@ -135,7 +135,7 @@ void TextureManager::deleteTexture(const std::string& texture_name)
     TextureMapIterator iter = texture_map_.find(texture_name);
 
     if (iter != texture_map_.end())
-        glDeleteTextures(1, &iter->second);
+        gl::DeleteTextures(1, &iter->second);
 }
 
 
@@ -145,7 +145,7 @@ void TextureManager::deleteAllTextures()
     TextureMapIterator iter = texture_map_.begin();
     for(; iter != texture_map_.end(); ++iter)
     {
-    	glDeleteTextures(1, &iter->second);
+    	gl::DeleteTextures(1, &iter->second);
     }
 }
 
