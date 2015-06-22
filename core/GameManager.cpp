@@ -58,9 +58,12 @@ namespace JU
     	while(running_)
     	{
     		input_manager_.update();
-    		running_ = input_manager_.quitting();
-
-
+    		if (input_manager_.quitting())
+    		{
+    			running_ = false;
+    			break;
+    		}
+    		state_manager_.draw();
     	}
     }
 
