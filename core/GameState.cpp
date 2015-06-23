@@ -14,13 +14,19 @@
 namespace JU
 {
 
-GameState::GameState() : p_scene_(nullptr)
+GameState::GameState() : name_(), p_scene_(nullptr)
 {
 }
 
 
 GameState::~GameState()
 {
+}
+
+
+std::string GameState::getName() const
+{
+	return name_;
 }
 
 

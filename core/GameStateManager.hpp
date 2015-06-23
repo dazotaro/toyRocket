@@ -9,15 +9,16 @@
 #define GAMESTATEMANAGER_HPP_
 
 // Local Includes
-#include "GameState.hpp"		// GameState
+#include "GameState.hpp"				// GameState
+#include "PropertyTreeInterface.hpp"	// PropertyTreeInterface
 // Global Includes
-#include <string>				// std::string
-#include <map>  				// std::map
+#include <string>						// std::string
+#include <map>  						// std::map
 
 namespace JU
 {
 
-class GameStateManager
+class GameStateManager : public PropertyTreeInterface
 {
     public:
         GameStateManager ();
@@ -29,6 +30,17 @@ class GameStateManager
 		virtual bool draw();
 		void addState(const char* name, GameState* game_state);
 		bool changeState(const char* name);
+
+    public:
+		// PropertyTreeInterface
+		// ----------------------
+        // It returns the [XML,JSON] tag of object
+        virtual const char* getTag() const { return "GameStateManager"; }
+        // Given a property tree, it imports its contents into the object
+        virtual bool importFromPropertyTree(const boost::property_tree::ptree& pt);
+        // It exports the contents of the object to a property tree
+        virtual bool exportToPropertyTree(boost::property_tree::ptree& pt) const;
+
 
     private:
 		// Type Definitions

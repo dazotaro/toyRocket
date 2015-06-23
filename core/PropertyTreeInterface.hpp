@@ -21,6 +21,8 @@ class PropertyTreeInterface
         virtual ~PropertyTreeInterface() {}
 
     public:
+        // It returns the [XML,JSON] tag of object
+        virtual const char* getTag() const = 0;
         // Given a property tree, it imports its contents into the object
         virtual bool importFromPropertyTree(const boost::property_tree::ptree& pt) = 0;
         // It exports the contents of the object to a property tree

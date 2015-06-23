@@ -8,6 +8,8 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
+#include <string>	// std::string
+
 namespace JU
 {
 
@@ -19,6 +21,9 @@ class GameState
     public:
 		GameState();
 		virtual ~GameState();
+
+		std::string getName() const;
+
 		virtual bool load();
         virtual bool initialize();
         virtual bool update();
@@ -29,7 +34,8 @@ class GameState
         void registerGLScene(GLScene* scene);
 
     protected:
-        GLScene* p_scene_;
+        std::string name_;
+        GLScene* 	p_scene_;
 };
 
 } /* namespace JU */
