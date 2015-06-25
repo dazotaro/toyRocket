@@ -37,14 +37,13 @@ class GLScene
         virtual void keyboard(unsigned char key, int x, int y) = 0;
         virtual void mouseClick(int button, int state, int x, int y) = 0;
         virtual void mouseMotion(int x, int y) = 0;
-        // VIRTUAL
         virtual void resize(int width, int height);
+        virtual void clear(void) = 0;
 
         // DEBUG
         const char* getGLSLCurrentProgramString() const;
 
     protected:
-        virtual void clear(void) = 0;
         GLSLProgram compileAndLinkShader(const char* vertex, const char* fragment);
         GLSLProgram compileAndLinkShader(const char* vertex, const char* geometry, const char* fragment);
 
