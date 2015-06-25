@@ -7,10 +7,13 @@
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/peaworm"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/rocket"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/toyRocket"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/peaworm/Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/rocket/Debug"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/toyRocket/Debug"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="peaworm" srcPrefixMapping="" srcRootPath=""/>
 						<entry flags="RESOLVED" kind="libraryFile" name="rocket" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="toyRocket" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -57,7 +60,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry excluding="graphics|core" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="core"/>
+						<entry excluding="Singleton.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="core"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="graphics"/>
 					</sourceEntries>
 				</configuration>
@@ -69,8 +72,11 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/peaworm"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/toyRocket"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/peaworm/Release"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/toyRocket/Release"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="peaworm" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="toyRocket" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -95,7 +101,7 @@
 								<option id="gnu.cpp.compiler.option.dialect.std.1331332821" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" value="gnu.cpp.compiler.dialect.c++11" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.warnings.extrawarn.1880287568" name="Extra warnings (-Wextra)" superClass="gnu.cpp.compiler.option.warnings.extrawarn" value="true" valueType="boolean"/>
 								<option id="gnu.cpp.compiler.option.warnings.pedantic.1863976986" name="Pedantic (-pedantic)" superClass="gnu.cpp.compiler.option.warnings.pedantic" value="true" valueType="boolean"/>
-								<option id="gnu.cpp.compiler.option.include.paths.514886482" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.cpp.compiler.option.include.paths.514886482" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths"/>
 								<option id="gnu.cpp.compiler.option.other.other.635402005" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.2029009312" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__cplusplus=201103L"/>
@@ -117,7 +123,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry excluding="core|graphics" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="core"/>
+						<entry excluding="Singleton.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="core"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="graphics"/>
 					</sourceEntries>
 				</configuration>
