@@ -6,6 +6,7 @@
  */
 
 #include "GameStateManager.hpp"
+#include "GameStateInterface.hpp"	// GameStateInterface
 #include "SystemLog.hpp"			// SystemLog::logMessage
 
 namespace JU
@@ -45,7 +46,7 @@ bool GameStateManager::draw()
 }
 
 
-void GameStateManager::addState(const char* name, GameState* game_state)
+void GameStateManager::addState(const char* name, GameStateInterface* game_state)
 {
 	if (state_map_.find(name) != state_map_.end())
 	{
@@ -77,6 +78,7 @@ bool GameStateManager::changeState(const char* name)
 // Given a property tree, it imports its contents into the object
 bool GameStateManager::importFromPropertyTree(const boost::property_tree::ptree& pt)
 {
+	/*
     std::string current_state = pt.get<std::string>("current_state");
 
     boost::property_tree::ptree children = pt.get_child("states");
@@ -95,6 +97,7 @@ bool GameStateManager::importFromPropertyTree(const boost::property_tree::ptree&
         }
         state_map_.insert(state.getName(), state);
     }
+    */
 
 	return true;
 }

@@ -9,7 +9,6 @@
 #define GAMESTATEMANAGER_HPP_
 
 // Local Includes
-#include "GameState.hpp"				// GameState
 #include "PropertyTreeInterface.hpp"	// PropertyTreeInterface
 // Global Includes
 #include <string>						// std::string
@@ -17,6 +16,9 @@
 
 namespace JU
 {
+
+// Forward Declarations
+class GameStateInterface;
 
 class GameStateManager : public PropertyTreeInterface
 {
@@ -28,7 +30,7 @@ class GameStateManager : public PropertyTreeInterface
         virtual bool initialize();
         virtual void exit();
 		virtual bool draw();
-		void addState(const char* name, GameState* game_state);
+		void addState(const char* name, GameStateInterface* game_state);
 		bool changeState(const char* name);
 
     public:
@@ -44,7 +46,7 @@ class GameStateManager : public PropertyTreeInterface
 
     private:
 		// Type Definitions
-		typedef std::map<std::string, GameState*> StateMap;
+		typedef std::map<std::string, GameStateInterface*> StateMap;
 		typedef StateMap::iterator StateMapIter;
 		// Member Variables
 		StateMap 			state_map_;

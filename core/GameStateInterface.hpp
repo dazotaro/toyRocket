@@ -5,39 +5,33 @@
  *      Author: jusabiaga
  */
 
-#ifndef GAMESTATE_HPP_
-#define GAMESTATE_HPP_
+#ifndef GAMESTATEINTERFACE_HPP_
+#define GAMESTATEINTERFACE_HPP_
 
 #include <string>	// std::string
 
 namespace JU
 {
 
-// Forward Declarations
-class GLScene;
-
-class GameState
+class GameStateInterface
 {
     public:
-		GameState();
-		virtual ~GameState();
+		GameStateInterface(const std::string& name);
+		virtual ~GameStateInterface();
 
 		std::string getName() const;
 
-		virtual bool load();
-        virtual bool initialize();
-        virtual bool update();
-        virtual bool draw();
-        virtual bool free();
-        virtual bool unload();
-
-        void registerGLScene(GLScene* scene);
+		virtual bool load() = 0;
+        virtual bool initialize() = 0;
+        virtual bool update() = 0;
+        virtual bool draw() = 0;
+        virtual bool free() = 0;
+        virtual bool unload() = 0;
 
     protected:
         std::string name_;
-        GLScene* 	p_scene_;
 };
 
 } /* namespace JU */
 
-#endif /* GAMESTATE_HPP_ */
+#endif /* GAMESTATEINTERFACE_HPP_ */

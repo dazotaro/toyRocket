@@ -6,83 +6,25 @@
  */
 
 // Local includes
-#include "GameState.hpp"
-
-// Global includes
-#include "../graphics/GLScene.hpp"		// GLScene
+#include "GameStateInterface.hpp"
 
 namespace JU
 {
 
-GameState::GameState() : name_(), p_scene_(nullptr)
+GameStateInterface::GameStateInterface(const std::string& name) : name_(name)
 {
 }
 
 
-GameState::~GameState()
+GameStateInterface::~GameStateInterface()
 {
 }
 
 
-std::string GameState::getName() const
+std::string GameStateInterface::getName() const
 {
 	return name_;
 }
-
-
-bool GameState::load()
-{
-
-    return true;
-}
-
-
-bool GameState::initialize()
-{
-
-    return true;
-}
-
-
-
-bool GameState::update()
-{
-
-    return true;
-}
-
-
-
-bool GameState::draw()
-{
-	if (p_scene_)
-		p_scene_->render();
-
-    return true;
-}
-
-
-
-bool GameState::free()
-{
-
-    return true;
-}
-
-
-
-bool GameState::unload()
-{
-
-    return true;
-}
-
-
-void GameState::registerGLScene(GLScene* scene)
-{
-	p_scene_ = scene;
-}
-
 
 
 } /* namespace JU */
