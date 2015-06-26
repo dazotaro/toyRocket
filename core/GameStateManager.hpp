@@ -22,6 +22,13 @@ class GameStateInterface;
 
 class GameStateManager : public PropertyTreeInterface
 {
+		enum Status
+		{
+			IDLE,
+			RUNNING,
+			SUSPENDED
+		};
+
     public:
         GameStateManager ();
         virtual ~GameStateManager ();
@@ -29,6 +36,7 @@ class GameStateManager : public PropertyTreeInterface
         // Interface Functions
         virtual bool initialize();
         virtual void exit();
+        virtual void update();
 		virtual bool draw();
 		void addState(const char* name, GameStateInterface* game_state);
 		bool changeState(const char* name);
@@ -51,6 +59,7 @@ class GameStateManager : public PropertyTreeInterface
 		// Member Variables
 		StateMap 			state_map_;
 		StateMapIter		curr_state_;
+		Status				status_;
 };
 
 } /* namespace JU */

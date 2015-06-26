@@ -21,12 +21,14 @@ class GameStateInterface
 
 		std::string getName() const;
 
-		virtual bool load() = 0;
-        virtual bool initialize() = 0;
-        virtual bool update() = 0;
-        virtual bool draw() = 0;
-        virtual bool free() = 0;
-        virtual bool unload() = 0;
+		virtual bool enter() 				  = 0;
+        virtual bool synchronize() 			  = 0;
+        virtual bool commonEnterSynchronize() = 0;
+        virtual bool update() 				  = 0;
+        virtual bool draw() 				  = 0;
+        virtual bool exit() 				  = 0;
+        virtual bool suspend() 				  = 0;
+        virtual bool commonExitSuspend() 	  = 0;
 
     protected:
         std::string name_;

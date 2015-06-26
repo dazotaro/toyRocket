@@ -20,13 +20,19 @@ DefaultGameState::~DefaultGameState()
 }
 
 
-bool DefaultGameState::load()
+bool DefaultGameState::enter()
 {
 	return true;
 }
 
 
-bool DefaultGameState::initialize()
+bool DefaultGameState::synchronize()
+{
+	return true;
+}
+
+
+bool DefaultGameState::commonEnterSynchronize()
 {
 	return true;
 }
@@ -44,13 +50,19 @@ bool DefaultGameState::draw()
 }
 
 
-bool DefaultGameState::free()
+bool DefaultGameState::exit()
 {
 	return true;
 }
 
 
-bool DefaultGameState::unload()
+bool DefaultGameState::suspend()
+{
+	return true;
+}
+
+
+bool DefaultGameState::commonExitSuspend()
 {
 	return true;
 }

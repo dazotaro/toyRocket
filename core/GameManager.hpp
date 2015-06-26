@@ -26,6 +26,8 @@ class GameManager
         virtual void loop();
         virtual void exit();
 
+        GameStateManager& getStateManager();
+
     private:
         GameStateManager state_manager_;
         Window           window_;

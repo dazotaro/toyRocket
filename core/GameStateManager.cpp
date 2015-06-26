@@ -12,7 +12,7 @@
 namespace JU
 {
 
-GameStateManager::GameStateManager ()
+GameStateManager::GameStateManager () : status_(IDLE)
 {
 // TODO Auto-generated constructor stub
 
@@ -21,12 +21,13 @@ GameStateManager::GameStateManager ()
 
 GameStateManager::~GameStateManager ()
 {
-// TODO Auto-generated destructor stub
+
 }
 
 
 bool GameStateManager::initialize()
 {
+	status_ = IDLE;
 
     return true;
 }
@@ -34,9 +35,27 @@ bool GameStateManager::initialize()
 
 void GameStateManager::exit()
 {
+	status_ = SUSPENDED;
 
+	for (StateMapIter iter = state_map_.begin(); iter != state_map_.end(); ++iter)
+	{
+		iter->second->commonExitSuspend();
+		iter->second->exit();
+		delete iter->second;
+	}
 }
 
+
+void GameStateManager::update()
+{
+	if (status_ == IDLE)
+	{
+		curr_state_->second->enter();
+		curr_state_->second->commonEnterSynchronize();
+
+		status_ = RUNNING;
+	}
+}
 
 bool GameStateManager::draw()
 {
@@ -61,15 +80,14 @@ bool GameStateManager::changeState(const char* name)
 {
 	StateMapIter state_iter = state_map_.find(name);
 
-	if (state_iter != state_map_.end())
+	if (state_iter == state_map_.end())
 	{
-		SystemLog::logMessage("GameStateManager", "setCurrentState(), state already exits");
+		SystemLog::logMessage("GameStateManager", "changeState(), state does not exits");
 
 		return false;
 	}
 
 	curr_state_ = state_iter;
-	curr_state_->second->initialize();
 
 	return true;
 }
