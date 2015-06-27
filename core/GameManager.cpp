@@ -65,6 +65,9 @@ void GameManager::loop()
 		}
 		state_manager_.update();
 		state_manager_.draw();
+		window_.render();
+
+
 	}
 	state_manager_.exit();
 }

@@ -125,6 +125,12 @@ bool Window::initialize(uint32 width, uint32 height)
 }
 
 
+void Window::render() const
+{
+    SDL_GL_SwapWindow(p_main_window_);
+}
+
+
 void Window::exit()
 {
     /* Delete our opengl context, destroy our window, and shutdown SDL */

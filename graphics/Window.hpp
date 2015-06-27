@@ -24,6 +24,7 @@ class Window
         virtual ~Window ();
 
         bool initialize(uint32 width, uint32 height);
+        void render() const;
         void exit();
 
     private:
