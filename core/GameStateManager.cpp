@@ -55,6 +55,10 @@ void GameStateManager::update()
 
 		status_ = RUNNING;
 	}
+	if (RUNNING)
+	{
+		curr_state_->second->update();
+	}
 }
 
 bool GameStateManager::draw()
