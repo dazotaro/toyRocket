@@ -35,7 +35,7 @@ bool GameManager::initialize()
 		return false;
 	}
 
-	if (!input_manager_.initialize())
+	if (!event_manager_.initialize())
 	{
 		std::printf("Input Manager failed to initialize!!!\n");
 		return false;
@@ -57,8 +57,8 @@ void GameManager::loop()
 {
 	while(running_)
 	{
-		input_manager_.update();
-		if (input_manager_.quitting())
+		event_manager_.update();
+		if (event_manager_.quitting())
 		{
 			running_ = false;
 			break;

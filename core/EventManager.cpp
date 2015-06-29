@@ -1,16 +1,16 @@
 /*
- * InputManager.cpp
+ * EventManager.cpp
  *
  *  Created on: Jun 4, 2015
  *      Author: jusabiaga
  */
 
 // Local includes
-#include "InputManager.hpp"
 #include "Defs.hpp"         // uint32
 
 // Global includes
 #include <cstdio>   // std::printf
+#include "EventManager.hpp"
 
 namespace JU
 {
@@ -18,7 +18,7 @@ namespace JU
 * @brief Default Constructor
 *
 */
-InputManager::InputManager (): quit_(false)
+EventManager::EventManager (): quit_(false)
 {
 }
 
@@ -27,7 +27,7 @@ InputManager::InputManager (): quit_(false)
 * @brief Default Destructor
 *
 */
-InputManager::~InputManager ()
+EventManager::~EventManager ()
 {
 }
 
@@ -40,7 +40,7 @@ InputManager::~InputManager ()
 * @return True if successful
 *
 */
-bool InputManager::initialize()
+bool EventManager::initialize()
 {
 	keyboard_.reset();
 
@@ -56,7 +56,7 @@ bool InputManager::initialize()
 * @return True if successful
 *
 */
-bool InputManager::update()
+bool EventManager::update()
 {
 	static uint32 frame_id = 0;
 	frame_id++;
@@ -93,7 +93,7 @@ bool InputManager::update()
 }
 
 
-bool InputManager::quitting() const
+bool EventManager::quitting() const
 {
 	return quit_;
 }

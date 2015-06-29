@@ -1,24 +1,22 @@
 /*
- * InputManager.hpp
+ * EventManager.hpp
  *
  *  Created on: Jun 4, 2015
  *      Author: jusabiaga
  */
 
-#ifndef INPUTMANAGER_HPP_
-#define INPUTMANAGER_HPP_
+#ifndef EVENTMANAGER_HPP_
+#define EVENTMANAGER_HPP_
 
 #include "Keyboard.hpp" // Keyboard
 
 namespace JU
 {
-
-
-    class InputManager
+    class EventManager
     {
         public:
-            InputManager ();
-            virtual ~InputManager ();
+            EventManager ();
+            virtual ~EventManager ();
 
         public:
             bool initialize();
@@ -32,4 +30,4 @@ namespace JU
 
 } /* namespace JU */
 
-#endif /* INPUTMANAGER_HPP_ */
+#endif /* EVENTMANAGER_HPP_ */

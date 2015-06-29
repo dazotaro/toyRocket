@@ -10,7 +10,7 @@
 
 #include "GameStateManager.hpp" // GameStateManager
 #include "../graphics/Window.hpp"           // Window
-#include "InputManager.hpp"		// InputManager
+#include "EventManager.hpp"		// EventManager
 
 
 namespace JU
@@ -31,7 +31,7 @@ class GameManager
     private:
         GameStateManager state_manager_;
         Window           window_;
-        InputManager     input_manager_;
+        EventManager     event_manager_;
 
         bool			 running_;
 };
