@@ -6,14 +6,11 @@
  */
 
 // Local includes
+#include "SDLEventManager.hpp"
 #include "Defs.hpp"         // uint32
 #include "SystemLog.hpp"	// JU::logMessage
-
 // Global includes
 #include <cstdio>   		// std::printf
-#include <SDL2/SDL.h>		// Event polling
-
-#include "SDLEventManager.hpp"
 
 namespace JU
 {
@@ -88,8 +85,6 @@ SDLEventManager::~SDLEventManager ()
 */
 bool SDLEventManager::initialize()
 {
-	keyboard_.reset();
-
 	return true;
 }
 
@@ -109,45 +104,40 @@ bool SDLEventManager::update()
 	//Event handler
 	SDL_Event event;
 
-	// Send event to AntTweakBar
-	//static bool handled = TwEventSDL(&event, SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
-
-//        if (!handled)
-//        {
-		//Handle events on queue
-		while (SDL_PollEvent( &event ) != 0)
+	//Handle events on queue
+	while (SDL_PollEvent( &event ) != 0)
+	{
+		switch(event.type)
 		{
-			switch(event.type)
-			{
-				case SDL_QUIT:
-					quit_ = true;
-					break;
+			case SDL_QUIT:
+				quit_ = true;
+				break;
 
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					keyboard_.handleEvent(event.key);
-					break;
-
-				case SDL_WINDOWEVENT:   // Window size has changed
+			case SDL_KEYDOWN:
+			case SDL_KEYUP:
+			case SDL_MOUSEMOTION:
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+			case SDL_MOUSEWHEEL:
+			case SDL_WINDOWEVENT:   // Window size has changed
+				{
+					SDLEventHashMap::iterator iter = event_handlers_hashmap_.find(event.type);
+					if (iter == event_handlers_hashmap_.end())
 					{
-						SDLEventHashMap::iterator iter = event_handlers_hashmap_.find(SDL_WINDOWEVENT);
-						if (iter == event_handlers_hashmap_.end())
-						{
-							SystemLog::logMessage(FUNCTION_NAME, "Window Resize Event has no handler assigned", false);
-						}
-						else
-						{
-							iter->second.handleEvent(&event);
-						}
+						SystemLog::logMessage(FUNCTION_NAME, "Window Resize Event has no handler assigned", false);
 					}
-					break;
+					else
+					{
+						iter->second.handleEvent(&event);
+					}
+				}
+				break;
 
-				default:
-					//std::printf ("Unhandled SDL2 event %i\n", event.type);
-					break;
-			}
+			default:
+				//std::printf ("Unhandled SDL2 event %i\n", event.type);
+				break;
 		}
-//        }
+	}
 
 	return true;
 }

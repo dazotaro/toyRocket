@@ -8,13 +8,16 @@
 #ifndef GAMEMANAGER_HPP_
 #define GAMEMANAGER_HPP_
 
-#include "GameStateManager.hpp" // GameStateManager
-#include "../graphics/Window.hpp"           // Window
-#include "SDLEventManager.hpp"		// SDLEventManager
+#include "GameStateManager.hpp" 	// GameStateManager
+#include "Keyboard.hpp"				// Keyboard
+#include "../graphics/Window.hpp"   // Window
 
 
 namespace JU
 {
+
+// Forward Declarations
+class SDLEventManager;
 
 class GameManager
 {
@@ -32,6 +35,7 @@ class GameManager
         GameStateManager state_manager_;
         Window           window_;
         SDLEventManager* SDL_event_manager_;
+        Keyboard 		 keyboard_;
 
         bool			 running_;
 };

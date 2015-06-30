@@ -51,25 +51,23 @@ void Keyboard::reset()
 * @return True if successful
 *
 */
-bool Keyboard::handleEvent(SDL_KeyboardEvent& event)
+void Keyboard::handleSDLEvent(const SDL_Event* event)
 {
-	switch (event.state)
+	switch (event->key.state)
 	{
 		case SDL_PRESSED:
-			keyState_[event.keysym.scancode] = KEY_DOWN;
+			keyState_[event->key.keysym.scancode] = KEY_DOWN;
 			break;
 
 		case SDL_RELEASED:
-			keyState_[event.keysym.scancode] = KEY_UP;
+			keyState_[event->key.keysym.scancode] = KEY_UP;
 			break;
 
 		default:
-			SystemLog::logMessage("Keyboard", "handleEvent(): event state not handled");
+			SystemLog::logMessage("Keyboard", "handleEvent(): event state not handled", true);
 			break;
 
 	}
-
-	return true;
 }
 
 

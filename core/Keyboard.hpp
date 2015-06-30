@@ -8,13 +8,16 @@
 #ifndef KEYBOARD_HPP_
 #define KEYBOARD_HPP_
 
+// Local includes
+#include "SDLEventManager.hpp"	// JU::SDLEventHandler
+
 // Global includes
 #include <SDL2/SDL.h>    // SDL_Event
 
 
 namespace JU
 {
-    class Keyboard
+    class Keyboard : public SDLEventHandler
     {
         enum KeyState
         {
@@ -25,9 +28,11 @@ namespace JU
         public:
             Keyboard();
             void reset();
-            bool handleEvent(SDL_KeyboardEvent& event);
             bool isKeyUp(SDL_Scancode key) const;
             bool isKeyDown(SDL_Scancode key) const;
+
+        public:
+			void handleSDLEvent(const SDL_Event* event);
 
         private:
             KeyState keyState_[SDL_NUM_SCANCODES];

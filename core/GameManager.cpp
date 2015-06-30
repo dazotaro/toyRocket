@@ -7,8 +7,9 @@
 
 // Local includes
 #include "GameManager.hpp"
-#include "Timer.hpp"		// JU::Timer
-#include "Singleton.hpp"	// JU::Singleton
+#include "Timer.hpp"			// JU::Timer
+#include "Singleton.hpp"		// JU::Singleton
+#include "SDLEventManager.hpp"	// JU::SDLEventManager
 // Global includes
 #include <cstdio>       // std::printf
 
@@ -30,23 +31,33 @@ GameManager::~GameManager ()
 
 bool GameManager::initialize()
 {
+	// WINDOW
+	// ------
 	if (!window_.initialize(800, 800))
 	{
 		std::printf("Window failed to initialize!!!\n");
 		return false;
 	}
 
+	// SDL EVENT MANAGER
+	// -----------------
 	SDL_event_manager_ = JU::Singleton<JU::SDLEventManager>::getInstance();
-
 	if (!SDL_event_manager_->initialize())
 	{
 		std::printf("Input Manager failed to initialize!!!\n");
 		return false;
 	}
-
 	// Register window resize event
 	SDL_event_manager_->attachEventHandler(SDL_WINDOWEVENT, "MainWindowResize", &window_);
 
+	// KEYBOARD
+	// --------
+	// Register window resize event
+	SDL_event_manager_->attachEventHandler(SDL_KEYDOWN, "Keydown", &keyboard_);
+	SDL_event_manager_->attachEventHandler(SDL_KEYUP, 	"Keyup",   &keyboard_);
+
+	// GAME STATE MANAGER
+	// ------------------
 	if (!state_manager_.initialize())
 	{
 		std::printf("Input Manager failed to initialize!!!\n");
@@ -94,6 +105,9 @@ void GameManager::loop()
 		state_manager_.update();
 		state_manager_.draw();
 		window_.render();
+
+		// For debugging purposes
+		SystemLog::printAllLogs();
 	}
 	state_manager_.exit();
 }

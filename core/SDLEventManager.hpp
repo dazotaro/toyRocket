@@ -9,11 +9,11 @@
 #define SDLEVENTMANAGER_HPP_
 
 // Local includes
-#include "Keyboard.hpp" 	// Keyboard
 #include "Defs.hpp"			// uint32
 // Global includes
 #include <unordered_map>    // std::unordered_map
 #include <map>				// std::map
+#include <SDL2/SDL.h>    // SDL_Event
 
 
 namespace JU
@@ -64,7 +64,6 @@ namespace JU
             typedef std::unordered_map<SDLEvent::EventID, SDLEvent> SDLEventHashMap;
 
         private:
-            Keyboard 		keyboard_;
             bool 	 		quit_;
             SDLEventHashMap	event_handlers_hashmap_;
     };
