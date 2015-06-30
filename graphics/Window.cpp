@@ -149,8 +149,6 @@ void Window::handleSDLEvent(const SDL_Event* event)
 		width_  = event->window.data1;
 		height_ = event->window.data2;
 		SDL_SetWindowSize(p_main_window_, width_, height_);
-
-		std::printf("Width %i, Height %i\n", width_, height_);
 	}
 }
 
