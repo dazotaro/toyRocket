@@ -9,15 +9,15 @@
 #define WINDOW_HPP_
 
 // Local includes
-#include "../core/Defs.hpp"	// JU::uint32
-
+#include "../core/Defs.hpp"				// JU::uint32
+#include "../core/SDLEventManager.hpp"	// JU::SDLEventHandler
 // Global Include
 #include <SDL2/SDL.h>		// SDL2
 
 namespace JU
 {
 
-class Window
+class Window : public SDLEventHandler
 {
     public:
         Window ();
@@ -27,12 +27,14 @@ class Window
         void render() const;
         void exit();
 
+        // SDLEventHandler Interface
+		void handleSDLEvent(const SDL_Event* event);
+
     private:
     	SDL_Window* 	p_main_window_;
     	SDL_GLContext 	main_gl_context_;
     	uint32 width_;
     	uint32 height_;
-
 };
 
 } /* namespace JU */

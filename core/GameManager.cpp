@@ -8,13 +8,14 @@
 // Local includes
 #include "GameManager.hpp"
 #include "Timer.hpp"		// JU::Timer
+#include "Singleton.hpp"	// JU::Singleton
 // Global includes
 #include <cstdio>       // std::printf
 
 namespace JU
 {
 
-GameManager::GameManager () : running_(true)
+GameManager::GameManager () : SDL_event_manager_(nullptr), running_(true)
 {
 	// TODO Auto-generated constructor stub
 
@@ -35,11 +36,16 @@ bool GameManager::initialize()
 		return false;
 	}
 
-	if (!event_manager_.initialize())
+	SDL_event_manager_ = JU::Singleton<JU::SDLEventManager>::getInstance();
+
+	if (!SDL_event_manager_->initialize())
 	{
 		std::printf("Input Manager failed to initialize!!!\n");
 		return false;
 	}
+
+	// Register window resize event
+	SDL_event_manager_->attachEventHandler(SDL_WINDOWEVENT, "MainWindowResize", &window_);
 
 	if (!state_manager_.initialize())
 	{
@@ -79,8 +85,8 @@ void GameManager::loop()
 		else
 			counted_frames++;
 
-		event_manager_.update();
-		if (event_manager_.quitting())
+		SDL_event_manager_->update();
+		if (SDL_event_manager_->quitting())
 		{
 			running_ = false;
 			break;

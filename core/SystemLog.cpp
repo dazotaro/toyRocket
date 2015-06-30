@@ -16,7 +16,7 @@ namespace JU
 
 SystemLog::LogMap SystemLog::log_map_;
 
-void SystemLog::logMessage(const char* tag, const char* message)
+void SystemLog::logMessage(const char* tag, const char* message, bool abort)
 {
 	LogMapIter iter = log_map_.find(tag);
 	if (iter == log_map_.end())		// new tag
@@ -26,6 +26,12 @@ void SystemLog::logMessage(const char* tag, const char* message)
 		log_map_[tag] = new_log;
 	}
 	log_map_[tag].addMessage(message);
+
+	if (abort)
+	{
+		printAllLogs();
+		exit(EXIT_FAILURE);
+	}
 }
 
 

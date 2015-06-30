@@ -9,11 +9,14 @@
 #define SYSTEMLOG_HPP_
 
 #include <string>		// std::string
+#include <sstream>		// std::stringstream
 #include <vector>		// std::vector
 #include <map>			// std::map
 
 namespace JU
 {
+
+#define FUNCTION_NAME __PRETTY_FUNCTION__
 
 class SystemLog
 {
@@ -35,7 +38,7 @@ class SystemLog
 		};
 
 	public:
-		static void logMessage(const char* tag, const char* message);
+		static void logMessage(const char* tag, const char* message, bool abort = false);
 		static void clearLog(const char* tag);
 		static void clarAllLogs();
 		static bool printLog(const char* tag);

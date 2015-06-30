@@ -8,6 +8,7 @@
 // Local Include
 #include "Window.hpp"
 #include "gl_core_4_2.hpp"				// OpenGL 4.2 Core Profile
+#include "../core/SDLEventManager.hpp"	// JU::SDLEventHandler
 
 
 namespace JU
@@ -138,5 +139,20 @@ void Window::exit()
     SDL_DestroyWindow(p_main_window_);
     SDL_Quit();
 }
+
+
+void Window::handleSDLEvent(const SDL_Event* event)
+{
+	if (event->window.event == SDL_WINDOWEVENT_RESIZED)
+	{
+		// Resize SDL video mode
+		width_  = event->window.data1;
+		height_ = event->window.data2;
+		SDL_SetWindowSize(p_main_window_, width_, height_);
+
+		std::printf("Width %i, Height %i\n", width_, height_);
+	}
+}
+
 
 } /* namespace JU */
