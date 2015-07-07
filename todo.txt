@@ -1,0 +1,7 @@
+ - Port changes from experimental 'buildTerrain' to toyRocket
+ - Use Skyline algorithm to build level
+ - Add 'Registry' singleton to handle *Managers
+ - Add ResourceManager
+ - Add MemoryManager
+ - Add basic background music
+
