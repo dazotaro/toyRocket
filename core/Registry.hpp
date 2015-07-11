@@ -19,7 +19,14 @@ class GameStateFactory;
 class Registry
 {
 	public:
+		static Registry& getInstance();
+
 		Registry();
+
+	protected:
+		Registry(const Registry& rhs) {}
+		Registry& operator=(const Registry& rhs);
+
 		virtual ~Registry();
 
 	public:

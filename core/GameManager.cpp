@@ -10,6 +10,7 @@
 #include "Timer.hpp"			// JU::Timer
 #include "Singleton.hpp"		// JU::Singleton
 #include "SDLEventManager.hpp"	// JU::SDLEventManager
+#include "SystemLog.hpp"		// JU::SystemLog
 // Global includes
 #include <cstdio>       // std::printf
 
@@ -108,6 +109,8 @@ void GameManager::loop()
 
 		// For debugging purposes
 		SystemLog::printAllLogs();
+		SystemLog::clarAllLogs();
+		keyboard_.printKeyboard();
 	}
 	state_manager_.exit();
 }

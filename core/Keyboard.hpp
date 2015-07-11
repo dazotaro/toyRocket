@@ -31,6 +31,10 @@ namespace JU
             bool isKeyUp(SDL_Scancode key) const;
             bool isKeyDown(SDL_Scancode key) const;
 
+#ifdef _DEBUG
+            void printKeyboard() const;
+#endif
+
         public:
 			void handleSDLEvent(const SDL_Event* event);
 

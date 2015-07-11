@@ -124,7 +124,9 @@ bool SDLEventManager::update()
 					SDLEventHashMap::iterator iter = event_handlers_hashmap_.find(event.type);
 					if (iter == event_handlers_hashmap_.end())
 					{
-						SystemLog::logMessage(FUNCTION_NAME, "Window Resize Event has no handler assigned", false);
+						char buffer[100];
+						std::sprintf(buffer, "%s:Event type (%x) has no handler assigned\n", __PRETTY_FUNCTION__, event.type);
+						SystemLog::logMessage(FUNCTION_NAME, buffer, false);
 					}
 					else
 					{
