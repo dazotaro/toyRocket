@@ -151,19 +151,19 @@ bool SDLEventManager::quitting() const
 }
 
 
-void SDLEventManager::attachEventHandler(SDLEvent::EventID event_id, const std::string& handler_name, SDLEventHandler* event_hander)
+void SDLEventManager::attachEventHandler(SDLEvent::EventID event_id, const std::string& handler_name, SDLEventHandler* event_handler)
 {
 	SDLEventHashMap::iterator result = event_handlers_hashmap_.find(event_id);
 	// Is this a new event type?
 	if (result == event_handlers_hashmap_.end())
 	{
 		SDLEvent event (event_id);
-		event.attachEventHandler(handler_name, event_hander);
+		event.attachEventHandler(handler_name, event_handler);
 		event_handlers_hashmap_[event_id] = event;
 	}
 	else
 	{
-		result->second.attachEventHandler(handler_name, event_hander);
+		result->second.attachEventHandler(handler_name, event_handler);
 	}
 }
 
