@@ -83,54 +83,54 @@ class ShapeHelper2
 							  JU::uint32 num_stacks = 10,
 							  JU::f32 radius = 0.2f);
 
-		static void buildPlane(std::string&  				 name,
-							   Mesh2::VectorPositions&  	 vPositions,
-							   Mesh2::VectorNormals& 		 vNormals,
-							   Mesh2::VectorTexCoords&		 vTexCoords,
-							   Mesh2::VectorVertexIndices& 	 vVertexIndices,
-							   Mesh2::VectorTriangleIndices& vTriangleIndices);
+		static void buildPlane(std::string&  		  name,
+							   VectorPositions&  	  vPositions,
+							   VectorNormals& 		  vNormals,
+							   VectorTexCoords&		  vTexCoords,
+							   VectorVertexIndices&   vVertexIndices,
+							   VectorTriangleIndices& vTriangleIndices);
 
-		static void buildCube(std::string&  				name,
-				   	   	   	  Mesh2::VectorPositions&  		vPositions,
-				   	   	   	  Mesh2::VectorNormals& 		vNormals,
-				   	   	   	  Mesh2::VectorTexCoords&		vTexCoords,
-				   	   	   	  Mesh2::VectorVertexIndices& 	vVertexIndices,
-							  Mesh2::VectorTriangleIndices& vTriangleIndices);
+		static void buildCube(std::string&  		 name,
+				   	   	   	  VectorPositions&  	 vPositions,
+				   	   	   	  VectorNormals& 		 vNormals,
+				   	   	   	  VectorTexCoords&		 vTexCoords,
+				   	   	   	  VectorVertexIndices& 	 vVertexIndices,
+							  VectorTriangleIndices& vTriangleIndices);
 
-		static void buildCylinder(std::string&  				name,
-				   	   	   	   	  Mesh2::VectorPositions&  		vPositions,
-				   	   	   	   	  Mesh2::VectorNormals& 		vNormals,
-				   	   	   	   	  Mesh2::VectorTexCoords&		vTexCoords,
-				   	   	   	   	  Mesh2::VectorVertexIndices& 	vVertexIndices,
-								  Mesh2::VectorTriangleIndices& vTriangleIndices,
-								  JU::uint32  					num_slices);
+		static void buildCylinder(std::string&  		 name,
+				   	   	   	   	  VectorPositions&  	 vPositions,
+				   	   	   	   	  VectorNormals& 		 vNormals,
+				   	   	   	   	  VectorTexCoords&		 vTexCoords,
+				   	   	   	   	  VectorVertexIndices& 	 vVertexIndices,
+								  VectorTriangleIndices& vTriangleIndices,
+								  JU::uint32  			 num_slices);
 
-		static void buildCone(std::string&  				name,
-				   	   	   	  Mesh2::VectorPositions&  		vPositions,
-				   	   	   	  Mesh2::VectorNormals& 		vNormals,
-				   	   	   	  Mesh2::VectorTexCoords&		vTexCoords,
-				   	   	   	  Mesh2::VectorVertexIndices& 	vVertexIndices,
-							  Mesh2::VectorTriangleIndices& vTriangleIndices,
-							  JU::uint32  					num_slices);
+		static void buildCone(std::string&  		 name,
+				   	   	   	  VectorPositions&  	 vPositions,
+				   	   	   	  VectorNormals& 		 vNormals,
+				   	   	   	  VectorTexCoords&		 vTexCoords,
+				   	   	   	  VectorVertexIndices& 	 vVertexIndices,
+							  VectorTriangleIndices& vTriangleIndices,
+							  JU::uint32  			 num_slices);
 
-		static void buildSphere(std::string&  					name,
-				   	   	   	    Mesh2::VectorPositions&  		vPositions,
-				   	   	   	    Mesh2::VectorNormals& 			vNormals,
-				   	   	   	    Mesh2::VectorTexCoords&			vTexCoords,
-				   	   	   	    Mesh2::VectorVertexIndices& 	vVertexIndices,
-								Mesh2::VectorTriangleIndices& 	vTriangleIndices,
-								JU::uint32  					num_slices,
-								JU::uint32  					num_stacks);
+		static void buildSphere(std::string&  		   name,
+				   	   	   	    VectorPositions&  	   vPositions,
+				   	   	   	    VectorNormals& 		   vNormals,
+				   	   	   	    VectorTexCoords&	   vTexCoords,
+				   	   	   	    VectorVertexIndices&   vVertexIndices,
+								VectorTriangleIndices& vTriangleIndices,
+								JU::uint32  		   num_slices,
+								JU::uint32  		   num_stacks);
 
-		static void buildTorus(std::string&  					name,
-				   	   	   	   Mesh2::VectorPositions&  		vPositions,
-				   	   	   	   Mesh2::VectorNormals& 			vNormals,
-				   	   	   	   Mesh2::VectorTexCoords&			vTexCoords,
-				   	   	   	   Mesh2::VectorVertexIndices& 		vVertexIndices,
-							   Mesh2::VectorTriangleIndices& 	vTriangleIndices,
-							   JU::uint32  						num_slices1,
-							   JU::uint32  						num_slices2,
-							   JU::f32							radius);
+		static void buildTorus(std::string&  		  name,
+				   	   	   	   VectorPositions&  	  vPositions,
+				   	   	   	   VectorNormals& 		  vNormals,
+				   	   	   	   VectorTexCoords&		  vTexCoords,
+				   	   	   	   VectorVertexIndices&   vVertexIndices,
+							   VectorTriangleIndices& vTriangleIndices,
+							   JU::uint32  	          num_slices1,
+							   JU::uint32  			  num_slices2,
+							   JU::f32				  radius);
 };
 
 } // namespace JU

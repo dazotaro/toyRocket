@@ -53,12 +53,12 @@ Mesh2::~Mesh2()
     // TODO Auto-generated destructor stub
 }
 
-const Mesh2::VectorVertexIndices& Mesh2::getVertexIndices() const
+const VectorVertexIndices& Mesh2::getVertexIndices() const
 {
     return vVertexIndices_;
 }
 
-const Mesh2::VectorTriangleIndices& Mesh2::getTriangleIndices() const
+const VectorTriangleIndices& Mesh2::getTriangleIndices() const
 {
     return vTriangleIndices_;
 }
@@ -68,22 +68,22 @@ const std::string& Mesh2::getName() const
     return name_;
 }
 
-const Mesh2::VectorNormals& Mesh2::getNormals() const
+const VectorNormals& Mesh2::getNormals() const
 {
     return vNormals_;
 }
 
-const Mesh2::VectorPositions& Mesh2::getPositions() const
+const VectorPositions& Mesh2::getPositions() const
 {
     return vPositions_;
 }
 
-const Mesh2::VectorTexCoords& Mesh2::getTexCoords() const
+const VectorTexCoords& Mesh2::getTexCoords() const
 {
     return vTexCoords_;
 }
 
-const Mesh2::VectorTangents& Mesh2::getTangents() const
+const VectorTangents& Mesh2::getTangents() const
 {
     return vTangents_;
 }

@@ -8,11 +8,17 @@
 #ifndef GLMESH2_HPP_
 #define GLMESH2_HPP_
 
-#include "gl_core_4_2.hpp"                // glLoadGen generated header file
-#include "Mesh2.hpp"     // Mesh2
+// Local includes
+#include "gl_core_4_2.hpp"      // glLoadGen generated header file
+#include "GraphicsDefs.hpp"     // VectorPositions, VectorNormas...
+// Global includes
+#include <string>               // std::string
 
 namespace JU
 {
+
+// Forward declarations
+class Mesh2;
 
 /**
  * @brief      Mesh2 adapter to OpenGL.
@@ -25,26 +31,29 @@ namespace JU
  *
  * \todo Turn into 'flyweight'
  */
-class GLMesh : public Mesh2
+class GLMesh
 {
     public:
-        explicit GLMesh(const Mesh2 &mesh);
-        GLMesh(const std::string&				name,
-        		const VectorPositions&			vPositions,
-        		const VectorNormals&			vNormals,
-        		const VectorTexCoords&			vTexCoords,
-        		const VectorVertexIndices&		vVertexIndices,
-        		const VectorTriangleIndices& 	vTriangleIndices);
+        GLMesh();
         virtual ~GLMesh();
 
+        void release();
         virtual void draw(void) const;
-        bool init(void);
-        bool initVBOs(void);
+        bool init(const Mesh2& mesh);
+        bool initVBOs(const std::string&              name,
+                      const VectorPositions&          vPositions,
+                      const VectorNormals&            vNormals,
+                      const VectorTangents&           vTangents,
+                      const VectorTexCoords&          vTexCoords,
+                      const VectorVertexIndices&      vVertexIndices,
+                      const VectorTriangleIndices&    vTriangleIndices);
 
     private:
-        GLuint vao_handle_;         //!< Handle to VAO
-        GLuint *vbo_handles_;
-        JU::uint8 num_buffers_;
+        bool        is_initialized_;    //!< Is mesh initialized
+        GLuint      vao_handle_;        //!< Handle to VAO
+        GLuint*     vbo_handles_;       //!< Array of vbo handles
+        JU::uint8   num_buffers_;       //!< Number of vbos
+        GLuint      num_triangles_;     //!< Number of triangles
 };
 
 } // namespace JU

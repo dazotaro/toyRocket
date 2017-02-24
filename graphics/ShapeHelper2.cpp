@@ -47,7 +47,7 @@ bool vec2Compare(const glm::vec2& a, const glm::vec2& b)
 }
 
 // Custom hash function
-size_t vertexIndicesHash(const Mesh2::VertexIndices& vertex)
+size_t vertexIndicesHash(const VertexIndices& vertex)
 {
     return (  std::hash<JU::uint32>()(vertex.position_)
             ^ std::hash<JU::uint32>()(vertex.normal_)
@@ -58,7 +58,7 @@ typedef std::map<glm::vec3, int, std::function<decltype(vec3Compare)> > MapVec3;
 typedef MapVec3::const_iterator MapVec3ConstIter;
 typedef std::map<glm::vec2, int, std::function<decltype(vec2Compare)> > MapVec2;
 typedef MapVec2::const_iterator MapVec2ConstIter;
-typedef std::unordered_map<Mesh2::VertexIndices, int, std::function<decltype(vertexIndicesHash)> > HashMapVertexIndices;
+typedef std::unordered_map<VertexIndices, int, std::function<decltype(vertexIndicesHash)> > HashMapVertexIndices;
 typedef HashMapVertexIndices::const_iterator HashMapVertexIndicesConstIter;
 
 
@@ -80,17 +80,17 @@ typedef HashMapVertexIndices::const_iterator HashMapVertexIndicesConstIter;
 *
 * @return The index to retrieve this vector from the vector of vertex indices (vVertexIndices)
 */
-inline Mesh2::VertexIndex processVertex(const ShapeHelper2::Vertex& vertex,
-						  	  	  	  	MapVec3& mPositions,
-						  	  	  	  	MapVec3& mNormals,
-						  	  	  	  	MapVec2& mTexCoords,
-						  	  	  	  	HashMapVertexIndices& hmVertexIndices,
-						  	  	  	  	Mesh2::VectorPositions& vPositions,
-						  	  	  	  	Mesh2::VectorNormals& vNormals,
-						  	  	  	  	Mesh2::VectorTexCoords& vTexCoords,
-						  	  	  	  	Mesh2::VectorVertexIndices& vVertexIndices)
+inline VertexIndex processVertex(const ShapeHelper2::Vertex& vertex,
+                                 MapVec3& mPositions,
+                                 MapVec3& mNormals,
+                                 MapVec2& mTexCoords,
+                                 HashMapVertexIndices& hmVertexIndices,
+                                 VectorPositions& vPositions,
+                                 VectorNormals& vNormals,
+                                 VectorTexCoords& vTexCoords,
+                                 VectorVertexIndices& vVertexIndices)
 {
-    Mesh2::VertexIndex vertex_index;
+    VertexIndex vertex_index;
 
     // POSITION
     //---------
@@ -130,7 +130,7 @@ inline Mesh2::VertexIndex processVertex(const ShapeHelper2::Vertex& vertex,
 
 
     // VERTEX: Does this vertex already exist?
-    Mesh2::VertexIndices vertex_indices (pos_index, normal_index, tex_index);
+    VertexIndices vertex_indices (pos_index, normal_index, tex_index);
     HashMapVertexIndicesConstIter vtx_iter = hmVertexIndices.find(vertex_indices);
     if (vtx_iter == hmVertexIndices.end())
     {
@@ -167,17 +167,17 @@ inline void addTriangle(const ShapeHelper2::Vertex& 	v0,
 						MapVec3& 					    mNormals,
 						MapVec2& 					    mTexCoords,
 						HashMapVertexIndices& 			hmVertexIndices,
-						Mesh2::VectorPositions& 		vPositions,
-						Mesh2::VectorNormals& 			vNormals,
-						Mesh2::VectorTexCoords& 		vTexCoords,
-						Mesh2::VectorVertexIndices& 	vVertexIndices,
-						Mesh2::VectorTriangleIndices& 	vTriangleIndices)
+						VectorPositions& 		vPositions,
+						VectorNormals& 			vNormals,
+						VectorTexCoords& 		vTexCoords,
+						VectorVertexIndices& 	vVertexIndices,
+						VectorTriangleIndices& 	vTriangleIndices)
 {
-	Mesh2::VertexIndex v0_index (processVertex(v0, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
-	Mesh2::VertexIndex v1_index (processVertex(v1, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
-	Mesh2::VertexIndex v2_index (processVertex(v2, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
+	VertexIndex v0_index (processVertex(v0, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
+	VertexIndex v1_index (processVertex(v1, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
+	VertexIndex v2_index (processVertex(v2, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices));
 
-	vTriangleIndices.push_back(Mesh2::TriangleIndices(v0_index, v1_index, v2_index));
+	vTriangleIndices.push_back(TriangleIndices(v0_index, v1_index, v2_index));
 }
 
 
@@ -205,11 +205,11 @@ inline void addTriangulatedQuad(const ShapeHelper2::Vertex& v0,
                                 MapVec3& 				    mNormals,
                                 MapVec2& 				    mTexCoords,
                                 HashMapVertexIndices& 		hmVertexIndices,
-                                Mesh2::VectorPositions& 	vPositions,
-                                Mesh2::VectorNormals& 		vNormals,
-                                Mesh2::VectorTexCoords& 	vTexCoords,
-                                Mesh2::VectorVertexIndices& vVertexIndices,
-  							  Mesh2::VectorTriangleIndices& vTriangleIndices)
+                                VectorPositions& 	vPositions,
+                                VectorNormals& 		vNormals,
+                                VectorTexCoords& 	vTexCoords,
+                                VectorVertexIndices& vVertexIndices,
+  							    VectorTriangleIndices& vTriangleIndices)
 {
     addTriangle(v0, v1, v2, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
     addTriangle(v0, v2, v3, mPositions, mNormals, mTexCoords, hmVertexIndices, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
@@ -232,11 +232,11 @@ inline void addTriangulatedQuad(const ShapeHelper2::Vertex& v0,
 void ShapeHelper2::buildMesh(Mesh2& mesh, ShapeType shape_type, JU::uint32 num_slices, JU::uint32 num_stacks, JU::f32 radius)
 {
     std::string  				 shape_name;
-	Mesh2::VectorPositions		 vPositions;    	//!< Vector of vertex coordinates
-	Mesh2::VectorNormals      	 vNormals;      	//!< Vector of vertex normals
-	Mesh2::VectorTexCoords    	 vTexCoords;    	//!< Vector of vertex texture coordinates
-	Mesh2::VectorVertexIndices 	 vVertexIndices;  	//!< Vector of vertex indices (position, normal, texture coordinates)
-	Mesh2::VectorTriangleIndices vTriangleIndices;	//!< Vector of triangle indices (v0, v1, v2)
+	VectorPositions		 vPositions;    	//!< Vector of vertex coordinates
+	VectorNormals      	 vNormals;      	//!< Vector of vertex normals
+	VectorTexCoords    	 vTexCoords;    	//!< Vector of vertex texture coordinates
+	VectorVertexIndices 	 vVertexIndices;  	//!< Vector of vertex indices (position, normal, texture coordinates)
+	VectorTriangleIndices vTriangleIndices;	//!< Vector of triangle indices (v0, v1, v2)
 
     switch(shape_type)
     {
@@ -272,12 +272,12 @@ void ShapeHelper2::buildMesh(Mesh2& mesh, ShapeType shape_type, JU::uint32 num_s
     mesh = Mesh2(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
 }
 
-void ShapeHelper2::buildPlane(std::string&  				name,
-		   	   	   	   	   	  Mesh2::VectorPositions&  	 	vPositions,
-		   	   	   	   	   	  Mesh2::VectorNormals& 		vNormals,
-		   	   	   	   	   	  Mesh2::VectorTexCoords&		vTexCoords,
-		   	   	   	   	   	  Mesh2::VectorVertexIndices& 	vVertexIndices,
-							  Mesh2::VectorTriangleIndices& vTriangleIndices)
+void ShapeHelper2::buildPlane(std::string&  		 name,
+		   	   	   	   	   	  VectorPositions&  	 vPositions,
+		   	   	   	   	   	  VectorNormals& 		 vNormals,
+		   	   	   	   	   	  VectorTexCoords&		 vTexCoords,
+		   	   	   	   	   	  VectorVertexIndices& 	 vVertexIndices,
+							  VectorTriangleIndices& vTriangleIndices)
 {
     name = std::string("plane");
 
@@ -312,12 +312,12 @@ void ShapeHelper2::buildPlane(std::string&  				name,
 
 
 
-void ShapeHelper2::buildCube(std::string&  					name,
-		   	   	   	   	     Mesh2::VectorPositions&  		vPositions,
-		   	   	   	   	     Mesh2::VectorNormals& 			vNormals,
-		   	   	   	   	     Mesh2::VectorTexCoords&		vTexCoords,
-		   	   	   	   	     Mesh2::VectorVertexIndices& 	vVertexIndices,
-							 Mesh2::VectorTriangleIndices&  vTriangleIndices)
+void ShapeHelper2::buildCube(std::string&  			name,
+		   	   	   	   	     VectorPositions&  		vPositions,
+		   	   	   	   	     VectorNormals& 		vNormals,
+		   	   	   	   	     VectorTexCoords&		vTexCoords,
+		   	   	   	   	     VectorVertexIndices& 	vVertexIndices,
+							 VectorTriangleIndices& vTriangleIndices)
 {
     name = std::string("cube");
 
@@ -439,13 +439,13 @@ void ShapeHelper2::buildCube(std::string&  					name,
 
 
 
-void ShapeHelper2::buildCylinder(std::string&  					name,
-		   	   	   	   	   	   	 Mesh2::VectorPositions&  		vPositions,
-		   	   	   	   	   	   	 Mesh2::VectorNormals& 			vNormals,
-		   	   	   	   	   	   	 Mesh2::VectorTexCoords&		vTexCoords,
-		   	   	   	   	   	   	 Mesh2::VectorVertexIndices& 	vVertexIndices,
-								 Mesh2::VectorTriangleIndices& 	vTriangleIndices,
-                                 JU::uint32  					num_slices)
+void ShapeHelper2::buildCylinder(std::string&  			name,
+		   	   	   	   	   	   	 VectorPositions&  		vPositions,
+		   	   	   	   	   	   	 VectorNormals& 		vNormals,
+		   	   	   	   	   	   	 VectorTexCoords&		vTexCoords,
+		   	   	   	   	   	   	 VectorVertexIndices& 	vVertexIndices,
+								 VectorTriangleIndices& vTriangleIndices,
+                                 JU::uint32  			num_slices)
 {
     // CONSTANTS
     const glm::vec3 ORIGIN (0.0f, 0.0f, 0.0f);          // ORIGIN of the Mesh in Model Coordinates
@@ -568,13 +568,13 @@ void ShapeHelper2::buildCylinder(std::string&  					name,
 
 
 
-void ShapeHelper2::buildCone(std::string&  					name,
-	   	   	   	 	 	 	 Mesh2::VectorPositions&  		vPositions,
-	   	   	   	 	 	 	 Mesh2::VectorNormals& 			vNormals,
-	   	   	   	 	 	 	 Mesh2::VectorTexCoords&		vTexCoords,
-	   	   	   	 	 	 	 Mesh2::VectorVertexIndices& 	vVertexIndices,
-							 Mesh2::VectorTriangleIndices& 	vTriangleIndices,
-	   	   	   	 	 	 	 JU::uint32  					num_slices)
+void ShapeHelper2::buildCone(std::string&  			name,
+	   	   	   	 	 	 	 VectorPositions&  		vPositions,
+	   	   	   	 	 	 	 VectorNormals& 		vNormals,
+	   	   	   	 	 	 	 VectorTexCoords&		vTexCoords,
+	   	   	   	 	 	 	 VectorVertexIndices& 	vVertexIndices,
+							 VectorTriangleIndices& vTriangleIndices,
+	   	   	   	 	 	 	 JU::uint32  			num_slices)
 {
     // CONSTANTS
     const glm::vec3 ORIGIN (0.0f, 0.0f, 0.0f);          // ORIGIN of the Mesh in Model Coordinates
@@ -673,14 +673,14 @@ void ShapeHelper2::buildCone(std::string&  					name,
 
 
 
-void ShapeHelper2::buildSphere(std::string&  				 name,
-	   	   	   	 	 	 	   Mesh2::VectorPositions&  	 vPositions,
-	   	   	   	 	 	 	   Mesh2::VectorNormals& 		 vNormals,
-	   	   	   	 	 	 	   Mesh2::VectorTexCoords&		 vTexCoords,
-	   	   	   	 	 	 	   Mesh2::VectorVertexIndices& 	 vVertexIndices,
-	   	   	   	 	 	 	   Mesh2::VectorTriangleIndices& vTriangleIndices,
-	   	   	   	 	 	 	   JU::uint32  				 	 num_slices,
-                               JU::uint32  				 	 num_stacks)
+void ShapeHelper2::buildSphere(std::string&  		  name,
+	   	   	   	 	 	 	   VectorPositions&  	  vPositions,
+	   	   	   	 	 	 	   VectorNormals& 		  vNormals,
+	   	   	   	 	 	 	   VectorTexCoords&		  vTexCoords,
+	   	   	   	 	 	 	   VectorVertexIndices&   vVertexIndices,
+	   	   	   	 	 	 	   VectorTriangleIndices& vTriangleIndices,
+	   	   	   	 	 	 	   JU::uint32  			  num_slices,
+                               JU::uint32  			  num_stacks)
 {
     // CONSTANTS
     const glm::vec3 ORIGIN (0.0f, 0.0f, 0.0f);          // ORIGIN of the Mesh in Model Coordinates
@@ -841,15 +841,15 @@ void ShapeHelper2::buildSphere(std::string&  				 name,
 }
 
 
-void ShapeHelper2::buildTorus(std::string&  				 name,
-	   	   	   	 	 	 	   Mesh2::VectorPositions&  	 vPositions,
-	   	   	   	 	 	 	   Mesh2::VectorNormals& 		 vNormals,
-	   	   	   	 	 	 	   Mesh2::VectorTexCoords&		 vTexCoords,
-	   	   	   	 	 	 	   Mesh2::VectorVertexIndices& 	 vVertexIndices,
-	   	   	   	 	 	 	   Mesh2::VectorTriangleIndices& vTriangleIndices,
-	   	   	   	 	 	 	   JU::uint32  				 	 num_slices1,
-                               JU::uint32  				 	 num_slices2,
-                               JU::f32						 radius)
+void ShapeHelper2::buildTorus(std::string&  		  name,
+	   	   	   	 	 	 	   VectorPositions&  	  vPositions,
+	   	   	   	 	 	 	   VectorNormals& 		  vNormals,
+	   	   	   	 	 	 	   VectorTexCoords&		  vTexCoords,
+	   	   	   	 	 	 	   VectorVertexIndices&   vVertexIndices,
+	   	   	   	 	 	 	   VectorTriangleIndices& vTriangleIndices,
+	   	   	   	 	 	 	   JU::uint32  			  num_slices1,
+                               JU::uint32  			  num_slices2,
+                               JU::f32				  radius)
 {
     // CONSTANTS
     const glm::vec3 ORIGIN 		(0.0f, 0.0f, 0.0f);         // ORIGIN of the Mesh in Model Coordinates

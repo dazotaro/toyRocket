@@ -5,9 +5,13 @@
  *      Author: jusabiaga
  */
 
+// Local includes
 #include "GLMesh.hpp"
-#include <iostream>     // std::cout, std::endl
 #include "DebugGlm.hpp" // overloaded 'operator<<' for GLM classes
+#include "Mesh2.hpp"     // Mesh2
+// Global includes
+#include <iostream>     // std::cout, std::endl
+
 
 namespace JU
 {
@@ -17,12 +21,66 @@ namespace JU
 *
 * @param mesh Mesh2 object containing the data for this object
 */
-GLMesh::GLMesh(const Mesh2 &mesh) : Mesh2(mesh), vao_handle_(0), vbo_handles_(nullptr), num_buffers_(0)
+GLMesh::GLMesh() : is_initialized_(false), vao_handle_(0), vbo_handles_(nullptr), num_buffers_(0), num_triangles_(0)
 {
 }
 
+
 /**
-* @brief Non-Default Constructor
+* @brief Destructor
+*/
+GLMesh::~GLMesh()
+{
+    release();
+}
+
+
+/**
+* @brief Release GPU buffers
+*/
+void GLMesh::release()
+{
+    // Delete the buffers
+    gl::DeleteBuffers(num_buffers_, vbo_handles_);
+    // Delete the vertex array
+    gl::DeleteVertexArrays(1, &vao_handle_);
+    // Release the handles
+    delete [] vbo_handles_;
+
+    num_buffers_ = num_triangles_ = 0;
+    is_initialized_ = false;
+}
+
+
+/**
+* @brief Create Vertex Buffer Object
+*
+* @detail If the data is not yet in a VBO, create and update the handle to it
+*
+* @return Successful?
+*
+* \todo Avoid duplicity of data by not duplicating vertices
+* \todo Warning, this assumes each face is a triangle
+*/
+bool GLMesh::init(const Mesh2& mesh)
+{
+    if (is_initialized_)
+        release();
+
+    return initVBOs(mesh.getName(),
+                    mesh.getPositions(),
+                    mesh.getNormals(),
+                    mesh.getTangents(),
+                    mesh.getTexCoords(),
+                    mesh.getVertexIndices(),
+                    mesh.getTriangleIndices());
+}
+
+
+/**
+* @brief Create Vertmesh.getTriangleIndices()ex Buffer Object
+*
+* @detail If the data is not yet in a VBO, create and update the handle to it
 *
 * @param name Id of the Mesh2
 * @param positions Vector with all vertex positions
@@ -30,74 +88,25 @@ GLMesh::GLMesh(const Mesh2 &mesh) : Mesh2(mesh), vao_handle_(0), vbo_handles_(nu
 * @param colors Vector with all vertex colors
 * @param tex_coords Vector with all vertex colors
 * @param faces Vector with all info about the faces of the Mesh2
-*/
-GLMesh::GLMesh(const std::string&				name,
-				 const VectorPositions&			vPositions,
-				 const VectorNormals&			vNormals,
-				 const VectorTexCoords&			vTexCoords,
-				 const VectorVertexIndices&		vVertexIndices,
-				 const VectorTriangleIndices& 	vTriangleIndices)
-		: Mesh2(name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices),
-		  vao_handle_(0), vbo_handles_(0), num_buffers_(4)
-{
-    vao_handle_ = 0;
-}
 
-/**
-* @brief Destructor
-*/
-GLMesh::~GLMesh()
-{
-	// Delete the buffers
-    gl::DeleteBuffers(num_buffers_, vbo_handles_);
-    // Delete the vertex array
-    gl::DeleteVertexArrays(1, &vao_handle_);
-    // Release the handles
-    delete [] vbo_handles_;
-}
-
-/**
-* @brief Create Vertex Buffer Object
-*
-* @detail If the data is not yet in a VBO, create and update the handle to it
-*
 * @return Successful?
 *
 * \todo Avoid duplicity of data by not duplicating vertices
 * \todo Warning, this assumes each face is a triangle
 */
-bool GLMesh::init(void)
-{
-    return initVBOs();
-}
-
-
-/**
-* @brief Create Vertex Buffer Object
-*
-* @detail If the data is not yet in a VBO, create and update the handle to it
-*
-* @return Successful?
-*
-* \todo Avoid duplicity of data by not duplicating vertices
-* \todo Warning, this assumes each face is a triangle
-*/
-bool GLMesh::initVBOs(void)
+bool GLMesh::initVBOs(const std::string&              name,
+                      const VectorPositions&          vPositions,
+                      const VectorNormals&            vNormals,
+                      const VectorTangents&           vTangents,
+                      const VectorTexCoords&          vTexCoords,
+                      const VectorVertexIndices&      vVertexIndices,
+                      const VectorTriangleIndices&    vTriangleIndices)
 {
 	// Attribute data sizes
 	const JU::uint8 POSITION_VECTOR_SIZE = 3;
 	const JU::uint8 NORMAL_VECTOR_SIZE 	 = 3;
 	const JU::uint8 TEX_VECTOR_SIZE      = 2;
 	const JU::uint8 TANGENT_VECTOR_SIZE  = 4;
-
-    // Retrieve the data from the Mesh2 object
-	//const std::string& 			 name			  = getName();
-	const VectorPositions& 		 vPositions		  = getPositions();
-	const VectorNormals& 		 vNormals		  = getNormals();
-	const VectorTexCoords& 		 vTexCoords		  = getTexCoords();
-	const VectorTangents&		 vTangents		  = getTangents();
-	const VectorVertexIndices&   vVertexIndices   = getVertexIndices();
-	const VectorTriangleIndices& vTriangleIndices = getTriangleIndices();
 
 	// Local variables
 	bool load_tangents = false;
@@ -190,10 +199,10 @@ bool GLMesh::initVBOs(void)
     }
 
     // Load the INDICES
-    JU::uint32 num_triangles = vTriangleIndices.size();
-    JU::uint16* aIndices = new JU::uint16[num_triangles * 3];
+    num_triangles_ = vTriangleIndices.size();
+    JU::uint16* aIndices = new JU::uint16[num_triangles_ * 3];
 
-    for (JU::uint32 triangle = 0; triangle < num_triangles; ++triangle)
+    for (JU::uint32 triangle = 0; triangle < num_triangles_; ++triangle)
     {
     	aIndices[triangle * 3 + 0] = vTriangleIndices[triangle].v0_;
     	aIndices[triangle * 3 + 1] = vTriangleIndices[triangle].v1_;
@@ -202,13 +211,15 @@ bool GLMesh::initVBOs(void)
 
     // Allocate and initialize VBO for vertex indices
     gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, num_triangles * 3 * sizeof(aIndices[0]), aIndices, gl::STATIC_DRAW);
+    gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, num_triangles_ * 3 * sizeof(aIndices[0]), aIndices, gl::STATIC_DRAW);
 
     // Clean up
     delete [] aPositions;
     delete [] aNormals;
     delete [] aTexCoords;
     delete [] aIndices;
+
+    is_initialized_ = true;
 
     return true;
 }
@@ -228,11 +239,9 @@ bool GLMesh::initVBOs(void)
 */
 void GLMesh::draw(void) const
 {
-	const VectorTriangleIndices& vTriangleIndices = getTriangleIndices();
-
     gl::BindVertexArray(vao_handle_);
     gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[num_buffers_ - 1]);
-    gl::DrawElements(gl::TRIANGLES, 3 * vTriangleIndices.size(), gl::UNSIGNED_SHORT, 0);
+    gl::DrawElements(gl::TRIANGLES, 3 * num_triangles_, gl::UNSIGNED_SHORT, 0);
 }
 
 } // namespace JU
