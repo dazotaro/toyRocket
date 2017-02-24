@@ -19,7 +19,7 @@ typedef uint16 VertexIndex;
 
 struct VertexIndices
 {
-    VertexIndices (JU::uint32 position, JU::uint32 normal, JU::uint32 tex)
+    VertexIndices (JU::uint32 position = 0, JU::uint32 normal = 0, JU::uint32 tex = 0)
         : position_(position), normal_(normal), tex_(tex) {}
 
     JU::uint32 position_;
@@ -37,7 +37,7 @@ struct VertexIndices
 
 struct TriangleIndices
 {
-    TriangleIndices (VertexIndex v0, VertexIndex v1, VertexIndex v2)
+    TriangleIndices (VertexIndex v0 = 0, VertexIndex v1 = 0, VertexIndex v2 = 0)
         : v0_(v0), v1_(v1), v2_(v2) {}
 
     VertexIndex v0_;
