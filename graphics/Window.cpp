@@ -102,7 +102,7 @@ bool Window::initialize(uint32 width, uint32 height)
     /* This makes our buffer swap
      * 1 = syncronized with the monitor's vertical refresh
      * 0 = immediate */
-    SDL_GL_SetSwapInterval(0);
+    SDL_GL_SetSwapInterval(1);
 
     /*
     printf("GL Vendor: %s\n", glGetString(gl::VENDOR));

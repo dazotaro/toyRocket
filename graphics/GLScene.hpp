@@ -32,7 +32,7 @@ class GLScene
 
         // PURE VIRTUAL
         virtual void init() = 0;
-        virtual void update(float time) = 0;
+        virtual void update(JU::uint32 time) = 0;
         virtual void render(void) = 0;
         virtual void keyboard(unsigned char key, int x, int y) = 0;
         virtual void mouseClick(int button, int state, int x, int y) = 0;

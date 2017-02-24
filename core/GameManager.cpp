@@ -81,21 +81,27 @@ void GameManager::loop()
 	while(running_)
 	{
 		uint32 time = timer.getTicks();
-		if (time > 1000)
+		timer.start();
+
+		/* FPS ESTIMATION: START */
+		static uint32 time_for_fps = 0;
+		time_for_fps += time;
+		if (time_for_fps > 1000)
 		{
 			//Calculate and correct fps
-			float avgFPS = counted_frames  * 1000.0f / time;
+			float avgFPS = counted_frames  * 1000.0f / time_for_fps;
 			if( avgFPS > 2000000 )
 			{
 				avgFPS = 0;
 			}
 
 			std::printf("FPS = %f\n", avgFPS);
-			timer.start();
+			time_for_fps = 0;
 			counted_frames = 0;
 		}
 		else
 			counted_frames++;
+        /* FPS ESTIMATION: END */
 
 		SDL_event_manager_->update();
 		if (SDL_event_manager_->quitting())
@@ -103,7 +109,7 @@ void GameManager::loop()
 			running_ = false;
 			break;
 		}
-		state_manager_.update();
+		state_manager_.update(time);
 		state_manager_.draw();
 		window_.render();
 

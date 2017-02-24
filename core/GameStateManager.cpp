@@ -46,7 +46,12 @@ void GameStateManager::exit()
 }
 
 
-void GameStateManager::update()
+/**
+* @brief Update routine
+*
+* @param time   Time elapsed since the last call in milliseconds
+*/
+void GameStateManager::update(JU::uint32 time)
 {
 	if (status_ == IDLE)
 	{
@@ -57,7 +62,7 @@ void GameStateManager::update()
 	}
 	if (RUNNING)
 	{
-		curr_state_->second->update();
+		curr_state_->second->update(time);
 	}
 }
 

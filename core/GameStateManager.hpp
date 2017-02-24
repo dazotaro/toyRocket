@@ -9,6 +9,7 @@
 #define GAMESTATEMANAGER_HPP_
 
 // Local Includes
+#include "Defs.hpp" // built-in data type defs
 #include "PropertyTreeInterface.hpp"	// PropertyTreeInterface
 // Global Includes
 #include <string>						// std::string
@@ -36,7 +37,7 @@ class GameStateManager : public PropertyTreeInterface
         // Interface Functions
         virtual bool initialize();
         virtual void exit();
-        virtual void update();
+        virtual void update(JU::uint32 time);
 		virtual bool draw();
 		void addState(const char* name, GameStateInterface* game_state);
 		bool changeState(const char* name);

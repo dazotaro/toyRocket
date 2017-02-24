@@ -38,7 +38,12 @@ bool DefaultGameState::commonEnterSynchronize()
 }
 
 
-bool DefaultGameState::update()
+/**
+* @brief Update routine
+*
+* @param time Time elapsed since the last call (in milliseconds)
+*/
+bool DefaultGameState::update(JU::uint32 time)
 {
 	return true;
 }
