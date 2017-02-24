@@ -29,7 +29,6 @@ class Mesh2;
  *              There should only be a GLMesh per Mesh2 object; if we want to have two instances of the same model,
  *              this is accomplish by creating to GLMeshInstance objects, both sharing the same GLMesh under the hood.
  *
- * \todo Turn into 'flyweight'
  */
 class GLMesh
 {

@@ -7,8 +7,7 @@
 
 // Local includes
 #include "GLMesh.hpp"
-#include "DebugGlm.hpp" // overloaded 'operator<<' for GLM classes
-#include "Mesh2.hpp"     // Mesh2
+#include "Mesh2.hpp"    // Mesh2
 // Global includes
 #include <iostream>     // std::cout, std::endl
 
