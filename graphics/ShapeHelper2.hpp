@@ -76,6 +76,11 @@ class ShapeHelper2
 		typedef VertexVector::const_iterator    VertexVectorConstIter;
 
 	public:
+        static std::string getMeshName(ShapeType type,
+                                       JU::uint32 num_slices = 10,
+                                       JU::uint32 num_stacks = 10,
+                                       JU::f32 radius = 0.2f);
+
 		// BUILDER FUNCTIONS: they build the desired shape
 		//-------------------------------------------------
 		static void buildMesh(Mesh2& mesh, ShapeType shape_type,
@@ -83,38 +88,33 @@ class ShapeHelper2
 							  JU::uint32 num_stacks = 10,
 							  JU::f32 radius = 0.2f);
 
-		static void buildPlane(std::string&  		  name,
-							   VectorPositions&  	  vPositions,
+		static void buildPlane(VectorPositions&  	  vPositions,
 							   VectorNormals& 		  vNormals,
 							   VectorTexCoords&		  vTexCoords,
 							   VectorVertexIndices&   vVertexIndices,
 							   VectorTriangleIndices& vTriangleIndices);
 
-		static void buildCube(std::string&  		 name,
-				   	   	   	  VectorPositions&  	 vPositions,
+		static void buildCube(VectorPositions&  	 vPositions,
 				   	   	   	  VectorNormals& 		 vNormals,
 				   	   	   	  VectorTexCoords&		 vTexCoords,
 				   	   	   	  VectorVertexIndices& 	 vVertexIndices,
 							  VectorTriangleIndices& vTriangleIndices);
 
-		static void buildCylinder(std::string&  		 name,
-				   	   	   	   	  VectorPositions&  	 vPositions,
+		static void buildCylinder(VectorPositions&  	 vPositions,
 				   	   	   	   	  VectorNormals& 		 vNormals,
 				   	   	   	   	  VectorTexCoords&		 vTexCoords,
 				   	   	   	   	  VectorVertexIndices& 	 vVertexIndices,
 								  VectorTriangleIndices& vTriangleIndices,
 								  JU::uint32  			 num_slices);
 
-		static void buildCone(std::string&  		 name,
-				   	   	   	  VectorPositions&  	 vPositions,
+		static void buildCone(VectorPositions&  	 vPositions,
 				   	   	   	  VectorNormals& 		 vNormals,
 				   	   	   	  VectorTexCoords&		 vTexCoords,
 				   	   	   	  VectorVertexIndices& 	 vVertexIndices,
 							  VectorTriangleIndices& vTriangleIndices,
 							  JU::uint32  			 num_slices);
 
-		static void buildSphere(std::string&  		   name,
-				   	   	   	    VectorPositions&  	   vPositions,
+		static void buildSphere(VectorPositions&  	   vPositions,
 				   	   	   	    VectorNormals& 		   vNormals,
 				   	   	   	    VectorTexCoords&	   vTexCoords,
 				   	   	   	    VectorVertexIndices&   vVertexIndices,
@@ -122,8 +122,7 @@ class ShapeHelper2
 								JU::uint32  		   num_slices,
 								JU::uint32  		   num_stacks);
 
-		static void buildTorus(std::string&  		  name,
-				   	   	   	   VectorPositions&  	  vPositions,
+		static void buildTorus(VectorPositions&  	  vPositions,
 				   	   	   	   VectorNormals& 		  vNormals,
 				   	   	   	   VectorTexCoords&		  vTexCoords,
 				   	   	   	   VectorVertexIndices&   vVertexIndices,

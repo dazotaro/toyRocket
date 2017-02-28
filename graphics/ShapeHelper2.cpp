@@ -216,6 +216,55 @@ inline void addTriangulatedQuad(const ShapeHelper2::Vertex& v0,
 }
 
 
+/**
+* @brief Builder function
+*
+* It generates a string identifier for a given shape
+*
+* @oaram shape_type Shape to build (cube, sphere...)
+* @param num_slices To be used only with cylinders, cones and spheres.
+* @param num_stacs  To be used with spheres only.
+* @param radius     To be used with torus only.
+*
+* @return The Mesh
+*/
+std::string ShapeHelper2::getMeshName(ShapeType type,
+                                      JU::uint32 num_slices,
+                                      JU::uint32 num_stacks,
+                                      JU::f32 radius)
+{
+    char buffer[100];
+
+    switch (type)
+    {
+        case PLANE:
+            return std::string("plane");
+
+        case CUBE:
+            return std::string("cube");
+
+        case CYLINDER:
+            sprintf(buffer, "cylinder_%i", num_slices);
+            return std::string(buffer);
+
+        case CONE:
+            sprintf(buffer, "cone_%i", num_slices);
+            return std::string(buffer);
+
+        case SPHERE:
+            sprintf(buffer, "sphere_%i_%i", num_slices, num_stacks);
+            return std::string(buffer);
+
+        case TORUS:
+            sprintf(buffer, "torus_%i_%i_%.2f", num_slices, num_stacks, radius);
+            return std::string(buffer);
+
+        default:
+            std::perror("Incorrect mesh type or parameters\n");
+            exit(EXIT_FAILURE);
+    }
+}
+
 
 /**
 * @brief Builder function
@@ -231,37 +280,37 @@ inline void addTriangulatedQuad(const ShapeHelper2::Vertex& v0,
 */
 void ShapeHelper2::buildMesh(Mesh2& mesh, ShapeType shape_type, JU::uint32 num_slices, JU::uint32 num_stacks, JU::f32 radius)
 {
-    std::string  				 shape_name;
+    std::string  		 shape_name;
 	VectorPositions		 vPositions;    	//!< Vector of vertex coordinates
 	VectorNormals      	 vNormals;      	//!< Vector of vertex normals
 	VectorTexCoords    	 vTexCoords;    	//!< Vector of vertex texture coordinates
-	VectorVertexIndices 	 vVertexIndices;  	//!< Vector of vertex indices (position, normal, texture coordinates)
+	VectorVertexIndices  vVertexIndices;  	//!< Vector of vertex indices (position, normal, texture coordinates)
 	VectorTriangleIndices vTriangleIndices;	//!< Vector of triangle indices (v0, v1, v2)
 
     switch(shape_type)
     {
         case PLANE:
-            ShapeHelper2::buildPlane(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+            ShapeHelper2::buildPlane(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
             break;
 
         case CUBE:
-            ShapeHelper2::buildCube(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+            ShapeHelper2::buildCube(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
             break;
 
         case CYLINDER:
-            ShapeHelper2::buildCylinder(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices);
+            ShapeHelper2::buildCylinder(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices);
             break;
 
         case CONE:
-            ShapeHelper2::buildCone(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices);
+            ShapeHelper2::buildCone(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices);
             break;
 
         case SPHERE:
-            ShapeHelper2::buildSphere(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices, num_stacks);
+            ShapeHelper2::buildSphere(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices, num_stacks);
             break;
 
         case TORUS:
-            ShapeHelper2::buildTorus(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices, num_stacks, radius);
+            ShapeHelper2::buildTorus(vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices, num_slices, num_stacks, radius);
             break;
 
         default:
@@ -269,18 +318,16 @@ void ShapeHelper2::buildMesh(Mesh2& mesh, ShapeType shape_type, JU::uint32 num_s
             break;
     }
 
+    shape_name = getMeshName(shape_type, num_slices, num_stacks, radius);
     mesh = Mesh2(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
 }
 
-void ShapeHelper2::buildPlane(std::string&  		 name,
-		   	   	   	   	   	  VectorPositions&  	 vPositions,
+void ShapeHelper2::buildPlane(VectorPositions&  	 vPositions,
 		   	   	   	   	   	  VectorNormals& 		 vNormals,
 		   	   	   	   	   	  VectorTexCoords&		 vTexCoords,
 		   	   	   	   	   	  VectorVertexIndices& 	 vVertexIndices,
 							  VectorTriangleIndices& vTriangleIndices)
 {
-    name = std::string("plane");
-
     vPositions.clear();
     vNormals.clear();
     vTexCoords.clear();
@@ -312,15 +359,12 @@ void ShapeHelper2::buildPlane(std::string&  		 name,
 
 
 
-void ShapeHelper2::buildCube(std::string&  			name,
-		   	   	   	   	     VectorPositions&  		vPositions,
+void ShapeHelper2::buildCube(VectorPositions&  		vPositions,
 		   	   	   	   	     VectorNormals& 		vNormals,
 		   	   	   	   	     VectorTexCoords&		vTexCoords,
 		   	   	   	   	     VectorVertexIndices& 	vVertexIndices,
 							 VectorTriangleIndices& vTriangleIndices)
 {
-    name = std::string("cube");
-
     vPositions.clear();
     vNormals.clear();
     vTexCoords.clear();
@@ -439,8 +483,7 @@ void ShapeHelper2::buildCube(std::string&  			name,
 
 
 
-void ShapeHelper2::buildCylinder(std::string&  			name,
-		   	   	   	   	   	   	 VectorPositions&  		vPositions,
+void ShapeHelper2::buildCylinder(VectorPositions&  		vPositions,
 		   	   	   	   	   	   	 VectorNormals& 		vNormals,
 		   	   	   	   	   	   	 VectorTexCoords&		vTexCoords,
 		   	   	   	   	   	   	 VectorVertexIndices& 	vVertexIndices,
@@ -459,10 +502,6 @@ void ShapeHelper2::buildCylinder(std::string&  			name,
     	std::printf("ShapeHelper2::buildCylinder: minimum number of slices is 3 (%i requested)\n", num_slices);
     	exit(EXIT_FAILURE);
     }
-
-    char buffer[100];
-    sprintf(buffer, "cylinder_%i", num_slices);
-    name = std::string(buffer);
 
     vPositions.clear();
     vNormals.clear();
@@ -568,8 +607,7 @@ void ShapeHelper2::buildCylinder(std::string&  			name,
 
 
 
-void ShapeHelper2::buildCone(std::string&  			name,
-	   	   	   	 	 	 	 VectorPositions&  		vPositions,
+void ShapeHelper2::buildCone(VectorPositions&  		vPositions,
 	   	   	   	 	 	 	 VectorNormals& 		vNormals,
 	   	   	   	 	 	 	 VectorTexCoords&		vTexCoords,
 	   	   	   	 	 	 	 VectorVertexIndices& 	vVertexIndices,
@@ -588,10 +626,6 @@ void ShapeHelper2::buildCone(std::string&  			name,
     	std::printf("ShapeHelper2::buildCone: minimum number of slices is 3 (%i requested)\n", num_slices);
     	exit(EXIT_FAILURE);
     }
-
-    char buffer[100];
-    sprintf(buffer, "cone_%i", num_slices);
-    name = std::string(buffer);
 
     vPositions.clear();
     vNormals.clear();
@@ -673,8 +707,7 @@ void ShapeHelper2::buildCone(std::string&  			name,
 
 
 
-void ShapeHelper2::buildSphere(std::string&  		  name,
-	   	   	   	 	 	 	   VectorPositions&  	  vPositions,
+void ShapeHelper2::buildSphere(VectorPositions&  	  vPositions,
 	   	   	   	 	 	 	   VectorNormals& 		  vNormals,
 	   	   	   	 	 	 	   VectorTexCoords&		  vTexCoords,
 	   	   	   	 	 	 	   VectorVertexIndices&   vVertexIndices,
@@ -696,10 +729,6 @@ void ShapeHelper2::buildSphere(std::string&  		  name,
     	std::printf("ShapeHelper2::buildSphere: minimum number of slices/stacks is 3 (%i/%i requested)\n", num_slices, num_stacks);
     	exit(EXIT_FAILURE);
     }
-
-    char buffer[100];
-    sprintf(buffer, "sphere_%i_%i", num_slices, num_stacks);
-    name = std::string(buffer);
 
     vPositions.clear();
     vNormals.clear();
@@ -841,15 +870,14 @@ void ShapeHelper2::buildSphere(std::string&  		  name,
 }
 
 
-void ShapeHelper2::buildTorus(std::string&  		  name,
-	   	   	   	 	 	 	   VectorPositions&  	  vPositions,
-	   	   	   	 	 	 	   VectorNormals& 		  vNormals,
-	   	   	   	 	 	 	   VectorTexCoords&		  vTexCoords,
-	   	   	   	 	 	 	   VectorVertexIndices&   vVertexIndices,
-	   	   	   	 	 	 	   VectorTriangleIndices& vTriangleIndices,
-	   	   	   	 	 	 	   JU::uint32  			  num_slices1,
-                               JU::uint32  			  num_slices2,
-                               JU::f32				  radius)
+void ShapeHelper2::buildTorus(VectorPositions&  	  vPositions,
+	   	   	   	 	 	 	  VectorNormals& 		  vNormals,
+	   	   	   	 	 	 	  VectorTexCoords&		  vTexCoords,
+	   	   	   	 	 	 	  VectorVertexIndices&   vVertexIndices,
+	   	   	   	 	 	 	  VectorTriangleIndices& vTriangleIndices,
+	   	   	   	 	 	 	  JU::uint32  			  num_slices1,
+                              JU::uint32  			  num_slices2,
+                              JU::f32				  radius)
 {
     // CONSTANTS
     const glm::vec3 ORIGIN 		(0.0f, 0.0f, 0.0f);         // ORIGIN of the Mesh in Model Coordinates
@@ -872,10 +900,6 @@ void ShapeHelper2::buildTorus(std::string&  		  name,
     	std::printf("ShapeHelper2::buildTorus: max tube radius is 0.5f (%f requested)\n", radius);
     	exit(EXIT_FAILURE);
     }
-
-    char buffer[100];
-    sprintf(buffer, "torus_%i_%i_%.2f", num_slices1, num_slices2, radius);
-    name = std::string(buffer);
 
     vPositions.clear();
     vNormals.clear();
