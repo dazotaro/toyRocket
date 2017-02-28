@@ -57,7 +57,7 @@ void MaterialManager::init()
 
 
 
-bool MaterialManager::getMaterial(const std::string& material_name, Material& material)
+bool MaterialManager::getMaterial(const std::string& material_name, const Material* material)
 {
 	if (!initialized_)
 		return false;
@@ -66,7 +66,7 @@ bool MaterialManager::getMaterial(const std::string& material_name, Material& ma
 	if (iter == hpMaterials_.end())
 		return false;
 
-	material =  iter->second;
+	material =  &iter->second;
 
 	return true;
 }

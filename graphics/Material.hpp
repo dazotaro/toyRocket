@@ -46,7 +46,7 @@ class MaterialManager
 {
 	public:
 		static void init();
-		static bool getMaterial(const std::string& material_name, Material& material);
+		static bool getMaterial(const std::string& material_name, const Material* material);
 
 	private:
 		typedef std::unordered_map<std::string, Material> HashMapMaterial;
