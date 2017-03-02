@@ -45,8 +45,10 @@ struct Material
 class MaterialManager
 {
 	public:
-		static void init();
-		static bool getMaterial(const std::string& material_name, const Material* material);
+		static const Material* getMaterial(const char* material_name);
+
+	private:
+        static void init();
 
 	private:
 		typedef std::unordered_map<std::string, Material> HashMapMaterial;

@@ -17,15 +17,11 @@ bool MaterialManager::initialized_ = false;
 MaterialManager::HashMapMaterial MaterialManager::hpMaterials_;
 
 
-
 // STATIC MEMBER FUNCTIONS
 // -----------------------
 
 void MaterialManager::init()
 {
-	if (initialized_)
-		return;
-
 	hpMaterials_["emerald"] 	   = Material(0.0215f,  0.1745f, 0.0215f, 0.07568f, 0.61424f, 0.07568f, 0.633f, 0.727811f, 0.633f, 0.6f * 128.0f);
 	hpMaterials_["jade"] 		   = Material(0.135f,   0.2225f, 0.1575f, 0.54f, 0.89f, 0.63f, 0.316228f, 0.316228f, 0.316228f, 0.1f * 128.0f);
 	hpMaterials_["obsidian"] 	   = Material(0.05375f, 0.05f, 0.06625f, 0.18275f, 0.17f, 0.22525f, 0.332741f, 0.328634f, 0.346435f, 0.3f * 128.0f);
@@ -57,18 +53,19 @@ void MaterialManager::init()
 
 
 
-bool MaterialManager::getMaterial(const std::string& material_name, const Material* material)
+const Material*  MaterialManager::getMaterial(const char* material_name)
 {
 	if (!initialized_)
-		return false;
+		init();
 
 	HashMapMaterialConstIter iter = hpMaterials_.find(material_name);
 	if (iter == hpMaterials_.end())
-		return false;
+	{
+	    std::printf("Material '%s' not found!", material_name);
+	    exit(EXIT_FAILURE);
+	}
 
-	material =  &iter->second;
-
-	return true;
+	return &iter->second;
 }
 
 
