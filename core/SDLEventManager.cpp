@@ -136,7 +136,7 @@ bool SDLEventManager::update()
 				break;
 
 			default:
-				//std::printf ("Unhandled SDL2 event %i\n", event.type);
+				//std::printf ("Unhandled SDL2 event %x\n", event.type);
 				break;
 		}
 	}

@@ -115,9 +115,8 @@ void Keyboard::printKeyboard() const
 	for (JU::uint32 scancode = SDL_SCANCODE_UNKNOWN; scancode < SDL_NUM_SCANCODES; ++scancode)
 	{
 		if (keyState_[scancode] == SDL_PRESSED)
-			std::printf("%s ", SDL_GetKeyName(SDL_GetKeyFromScancode((SDL_Scancode)scancode)));
+			std::printf("%s \n", SDL_GetKeyName(SDL_GetKeyFromScancode((SDL_Scancode)scancode)));
 	}
-	std::printf("\n");
 }
 #endif
 
