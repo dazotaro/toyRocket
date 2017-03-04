@@ -54,20 +54,8 @@ bool MeshImporter::import(const char* filename, Mesh2& mesh)
 
     if (scene->HasMeshes())
     {
-        // NOTE: Although Assimp can load more than one mesh per scene (depending on the assets format),
-        // at this point, only one mesh is processed per asset file
-        /*
-        if (scene->mNumMeshes != 1)
-        {
-            std::printf("Scene in file %s contains more than one mesh (%i)\n", filename, scene->mNumMeshes);
-            exit(EXIT_FAILURE);
-        }
-        */
-
         std::printf("Scene in file %s contains %i meshes\n", filename, scene->mNumMeshes);
 
-        // Merge all meshes into one
-        std::string name(filename);
         VectorPositions        vPositions;
         VectorNormals          vNormals;
         VectorTexCoords        vTexCoords;
@@ -106,20 +94,29 @@ bool MeshImporter::import(const char* filename, Mesh2& mesh)
             const uint32& num_vertices = pmesh->mNumVertices;
             const uint32& num_faces    = pmesh->mNumFaces;
 
+            uint32 last_vtx_index = vPositions.size();
+
             vPositions.resize(vPositions.size() + num_vertices);
-            vNormals.resize(vNormals.size() + num_vertices);
-            vTexCoords.resize(vTexCoords.size() + num_vertices);
+            // Load vertices into Mesh2 format
+            memcpy(&vPositions[last_vtx_index], pmesh->mVertices, sizeof(pmesh->mVertices[0]) *  num_vertices);
+
+            if (pmesh->HasNormals())
+            {
+                vNormals.resize(vNormals.size() + num_vertices);
+                // Load normals into Mesh2 format
+                memcpy(&vNormals[last_vtx_index], pmesh->mNormals, sizeof(pmesh->mNormals[0]) * num_vertices);
+            }
+
+            // \todo It should support more than one UV channel (as Assimp does)
+            if (pmesh->HasTextureCoords(0))
+            {
+                vTexCoords.resize(vTexCoords.size() + num_vertices);
+                // Load texture coordinates into Mesh2 format
+                memcpy(&vTexCoords[last_vtx_index], pmesh->mTextureCoords, sizeof(pmesh->mTextureCoords[0]) * num_vertices);
+            }
+
             vVertexIndices.resize(vVertexIndices.size() + num_vertices);
             vTriangleIndices.resize(vTriangleIndices.size() + num_faces);
-
-            // Load vertices into Mesh2 format
-            memcpy(&vPositions[0], pmesh->mVertices, sizeof(pmesh->mVertices[0]) *  num_vertices);
-
-            // Load normals into Mesh2 format
-            memcpy(&vNormals[0], pmesh->mNormals, sizeof(pmesh->mNormals[0]) * num_vertices);
-
-            // Load texture coordinates into Mesh2 format
-            memcpy(&vTexCoords[0], pmesh->mTextureCoords, sizeof(pmesh->mTextureCoords[0]) * num_vertices);
 
             // Load vertex indices to position array, normal array and texture coordinates array
             for (uint32 vertexid = 0; vertexid < num_vertices; vertexid++)
@@ -139,7 +136,7 @@ bool MeshImporter::import(const char* filename, Mesh2& mesh)
         }
 
         //mesh = Mesh2(name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
-        mesh.setName(name);
+        mesh.setName(filename);
         mesh.setPositions(vPositions);
         mesh.setNormals(vNormals);
         mesh.setTexCoords(vTexCoords);
