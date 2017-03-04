@@ -138,7 +138,13 @@ bool MeshImporter::import(const char* filename, Mesh2& mesh)
             }
         }
 
-        mesh = Mesh2(name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+        //mesh = Mesh2(name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+        mesh.setName(name);
+        mesh.setPositions(vPositions);
+        mesh.setNormals(vNormals);
+        mesh.setTexCoords(vTexCoords);
+        mesh.setVertexIndices(vVertexIndices);
+        mesh.setTriangleIndices(vTriangleIndices);
     }
 
 

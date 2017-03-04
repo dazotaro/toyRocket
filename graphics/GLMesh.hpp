@@ -39,13 +39,7 @@ class GLMesh
         void release();
         virtual void draw(void) const;
         bool init(const Mesh2& mesh);
-        bool initVBOs(const std::string&              name,
-                      const VectorPositions&          vPositions,
-                      const VectorNormals&            vNormals,
-                      const VectorTangents&           vTangents,
-                      const VectorTexCoords&          vTexCoords,
-                      const VectorVertexIndices&      vVertexIndices,
-                      const VectorTriangleIndices&    vTriangleIndices);
+        bool initVBOs(const Mesh2& mesh);
 
     private:
         bool        is_initialized_;    //!< Is mesh initialized

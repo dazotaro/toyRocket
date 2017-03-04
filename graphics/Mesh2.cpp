@@ -33,6 +33,7 @@ Mesh2::Mesh2()
 * @param tex_coords Vector with all vertex colors
 * @param faces Vector with all info about the faces of the Mesh2
 */
+/*
 Mesh2::Mesh2(const std::string&				name,
 			 const VectorPositions&			vPositions,
 			 const VectorNormals&			vNormals,
@@ -47,11 +48,55 @@ Mesh2::Mesh2(const std::string&				name,
 	  vTriangleIndices_(vTriangleIndices)
 {
 }
+*/
 
 Mesh2::~Mesh2()
 {
     // TODO Auto-generated destructor stub
 }
+
+
+void Mesh2::setVertexIndices(const VectorVertexIndices& vVertexIndices)
+{
+    vVertexIndices_ = vVertexIndices;
+}
+
+
+void Mesh2::setTriangleIndices(const VectorTriangleIndices& vTriangleIndices)
+{
+    vTriangleIndices_ = vTriangleIndices;
+}
+
+
+void Mesh2::setName(const std::string& name)
+{
+    name_ = name;
+}
+
+
+void Mesh2::setNormals(const VectorNormals& vNormals)
+{
+    vNormals_ = vNormals;
+}
+
+
+void Mesh2::setPositions(const VectorPositions& vPositions)
+{
+    vPositions_ = vPositions;
+}
+
+
+void Mesh2::setTexCoords(const VectorTexCoords& vTexCoords)
+{
+    vTexCoords_ = vTexCoords;
+}
+
+
+void Mesh2::setTangents(const VectorTangents& vTangents)
+{
+    vTangents_ = vTangents;
+}
+
 
 const VectorVertexIndices& Mesh2::getVertexIndices() const
 {

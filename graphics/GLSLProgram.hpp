@@ -44,6 +44,18 @@ class GLSLProgram
         static const std::string COLOR_TEX_PREFIX;
         static const std::string NORMAL_MAP_TEX_PREFIX;
 
+        static const std::string POSITION_ATTRIBUTE_NAME;
+        static const std::string COLOR_ATTRIBUTE_NAME;
+        static const std::string NORMAL_ATTRIBUTE_NAME;
+        static const std::string TANGENT_ATTRIBUTE_NAME;
+        static const std::string TEXCOORD_ATTRIBUTE_NAME;
+
+        static const JU::uint8 POSITION_ATTRIBUTE_LOCATION  = 0;
+        static const JU::uint8 COLOR_ATTRIBUTE_LOCATION     = 1;
+        static const JU::uint8 NORMAL_ATTRIBUTE_LOCATION    = 2;
+        static const JU::uint8 TANGENT_ATTRIBUTE_LOCATION   = 3;
+        static const JU::uint8 TEXCOORD_ATTRIBUTE_LOCATION  = 4;
+
         GLSLProgram();
 
         bool compileShaderFromFile(const char * fileName, GLSLShader::GLSLShaderType type);

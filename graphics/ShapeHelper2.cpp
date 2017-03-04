@@ -319,7 +319,13 @@ void ShapeHelper2::buildMesh(Mesh2& mesh, ShapeType shape_type, JU::uint32 num_s
     }
 
     shape_name = getMeshName(shape_type, num_slices, num_stacks, radius);
-    mesh = Mesh2(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+    //mesh = Mesh2(shape_name, vPositions, vNormals, vTexCoords, vVertexIndices, vTriangleIndices);
+    mesh.setName(shape_name);
+    mesh.setPositions(vPositions);
+    mesh.setNormals(vNormals);
+    mesh.setTexCoords(vTexCoords);
+    mesh.setVertexIndices(vVertexIndices);
+    mesh.setTriangleIndices(vTriangleIndices);
 }
 
 void ShapeHelper2::buildPlane(VectorPositions&  	 vPositions,

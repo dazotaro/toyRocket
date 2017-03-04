@@ -26,10 +26,16 @@ namespace JU
 
 const std::string GLSLProgram::COLOR_TEX_PREFIX ("ColorTex");
 const std::string GLSLProgram::NORMAL_MAP_TEX_PREFIX ("NormalMapTex");
+const std::string GLSLProgram::POSITION_ATTRIBUTE_NAME ("VertexPosition");
+const std::string GLSLProgram::COLOR_ATTRIBUTE_NAME("VertexColor");
+const std::string GLSLProgram::NORMAL_ATTRIBUTE_NAME("VertexNormal");
+const std::string GLSLProgram::TANGENT_ATTRIBUTE_NAME("VertexTangent");
+const std::string GLSLProgram::TEXCOORD_ATTRIBUTE_NAME("VertexTexCoord");
 
 
-GLSLProgram::GLSLProgram() : handle_(0), linked_(false) {}
-
+GLSLProgram::GLSLProgram() : handle_(0), linked_(false)
+{
+}
 
 
 bool GLSLProgram::compileShaderFromFile(const char * fileName, GLSLShader::GLSLShaderType type)

@@ -25,26 +25,37 @@ class Mesh2
 	public:
 
 		Mesh2();
+		/*
 		Mesh2(const std::string&			name,
 			  const VectorPositions&		vPositions,
 			  const VectorNormals&			vNormals,
 			  const VectorTexCoords&		vTexCoords,
 			  const VectorVertexIndices&	vVertexIndices,
 			  const VectorTriangleIndices& 	vTriangleIndices);
+			  */
 
 		virtual ~Mesh2();
 
 		// UTILITY FUNCTIONS
 		void computeTangents();
 
-		// GETTERS
-		const VectorVertexIndices& 		getVertexIndices() const;
-		const VectorTriangleIndices& 	getTriangleIndices() const;
-		const std::string& 				getName() const;
-		const VectorNormals& 			getNormals() const;
-		const VectorPositions& 			getPositions() const;
-		const VectorTexCoords& 			getTexCoords() const;
-		const VectorTangents&			getTangents() const;
+        // SETTERS
+        void setVertexIndices(const VectorVertexIndices& vVertexIndices);
+        void setTriangleIndices(const VectorTriangleIndices& vTriangleIndices);
+        void setName(const std::string& name);
+        void setNormals(const VectorNormals& vNormals);
+        void setPositions(const VectorPositions& vPositions);
+        void setTexCoords(const VectorTexCoords& vTexCoords);
+        void setTangents(const VectorTangents& vTangents);
+
+        // GETTERS
+        const VectorVertexIndices&      getVertexIndices() const;
+        const VectorTriangleIndices&    getTriangleIndices() const;
+        const std::string&              getName() const;
+        const VectorNormals&            getNormals() const;
+        const VectorPositions&          getPositions() const;
+        const VectorTexCoords&          getTexCoords() const;
+        const VectorTangents&           getTangents() const;
 
 		// EXPORT AND OUTPUT FUNCTIONS
 		void exportOBJ(void) const;

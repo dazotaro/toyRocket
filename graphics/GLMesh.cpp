@@ -7,9 +7,10 @@
 
 // Local includes
 #include "GLMesh.hpp"
-#include "Mesh2.hpp"    // Mesh2
+#include "Mesh2.hpp"        // Mesh2
+#include "GLSLProgram.hpp"  // static constants for attribute locations
 // Global includes
-#include <iostream>     // std::cout, std::endl
+#include <iostream>         // std::cout, std::endl
 
 
 namespace JU
@@ -66,13 +67,7 @@ bool GLMesh::init(const Mesh2& mesh)
     if (is_initialized_)
         release();
 
-    return initVBOs(mesh.getName(),
-                    mesh.getPositions(),
-                    mesh.getNormals(),
-                    mesh.getTangents(),
-                    mesh.getTexCoords(),
-                    mesh.getVertexIndices(),
-                    mesh.getTriangleIndices());
+    return initVBOs(mesh);
 }
 
 
@@ -93,53 +88,43 @@ bool GLMesh::init(const Mesh2& mesh)
 * \todo Avoid duplicity of data by not duplicating vertices
 * \todo Warning, this assumes each face is a triangle
 */
-bool GLMesh::initVBOs(const std::string&              name,
-                      const VectorPositions&          vPositions,
-                      const VectorNormals&            vNormals,
-                      const VectorTangents&           vTangents,
-                      const VectorTexCoords&          vTexCoords,
-                      const VectorVertexIndices&      vVertexIndices,
-                      const VectorTriangleIndices&    vTriangleIndices)
+bool GLMesh::initVBOs(const Mesh2& mesh)
 {
+    const std::string& name                       = mesh.getName();
+    const VectorPositions&       vPositions       = mesh.getPositions();
+    const VectorNormals&         vNormals         = mesh.getNormals();
+    const VectorTangents&        vTangents        = mesh.getTangents();
+    const VectorTexCoords&       vTexCoords       = mesh.getTexCoords();
+    const VectorVertexIndices&   vVertexIndices   = mesh.getVertexIndices();
+    const VectorTriangleIndices& vTriangleIndices = mesh.getTriangleIndices();
+
 	// Attribute data sizes
 	const JU::uint8 POSITION_VECTOR_SIZE = 3;
 	const JU::uint8 NORMAL_VECTOR_SIZE 	 = 3;
 	const JU::uint8 TEX_VECTOR_SIZE      = 2;
 	const JU::uint8 TANGENT_VECTOR_SIZE  = 4;
 
-	// Local variables
-	bool load_tangents = false;
-	JU::uint8 vbo_index = 0;
+	// Compute number of VBOs needed
+	num_buffers_ = 0;
 
-	if (vTangents.size() > 0)
-	{
-		num_buffers_ = 5;	// positions, texture_coordinates, normals, tangents and indices
-		load_tangents = true;
-	}
-	else
-		num_buffers_ = 4;
-
-    // The size of the VBOs must be equal to the number of unique vertices
-	JU::uint32 num_vertices = vVertexIndices.size();
-
-    float *aPositions	= new float [num_vertices * POSITION_VECTOR_SIZE];
-    float *aNormals     = new float [num_vertices * NORMAL_VECTOR_SIZE];
-    float *aTexCoords   = new float [num_vertices * TEX_VECTOR_SIZE];
-
-    //
-    for (JU::uint32 index = 0; index < num_vertices; ++index)
+    if (vPositions.size())
+        num_buffers_++;
+    else
     {
-		aPositions[index * POSITION_VECTOR_SIZE + 0] = vPositions[vVertexIndices[index].position_].x;
-		aPositions[index * POSITION_VECTOR_SIZE + 1] = vPositions[vVertexIndices[index].position_].y;
-		aPositions[index * POSITION_VECTOR_SIZE + 2] = vPositions[vVertexIndices[index].position_].z;
-
-		aNormals[index * NORMAL_VECTOR_SIZE + 0] = vNormals[vVertexIndices[index].normal_].x;
-		aNormals[index * NORMAL_VECTOR_SIZE + 1] = vNormals[vVertexIndices[index].normal_].y;
-		aNormals[index * NORMAL_VECTOR_SIZE + 2] = vNormals[vVertexIndices[index].normal_].z;
-
-		aTexCoords[index * TEX_VECTOR_SIZE + 0] = vTexCoords[vVertexIndices[index].tex_].s;
-		aTexCoords[index * TEX_VECTOR_SIZE + 1] = vTexCoords[vVertexIndices[index].tex_].t;
+        std::printf("Mesh %s has no positions\n", name.c_str());
     }
+    if (vTriangleIndices.size())
+        num_buffers_++;
+    else
+    {
+        std::printf("Mesh %s has no indices\n", name.c_str());
+    }
+    if (vNormals.size())
+        num_buffers_++;
+    if (vTangents.size())
+        num_buffers_++;
+    if (vTexCoords.size())
+        num_buffers_++;
 
     // Create and bind VAO
     gl::GenVertexArrays(1, &vao_handle_);
@@ -149,74 +134,119 @@ bool GLMesh::initVBOs(const std::string&              name,
     vbo_handles_ = new GLuint[num_buffers_];
     gl::GenBuffers(num_buffers_, vbo_handles_);
 
-    // Position VBO
-    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * POSITION_VECTOR_SIZE * sizeof(aPositions[0]), aPositions, gl::STATIC_DRAW);
-    gl::VertexAttribPointer(vbo_index, POSITION_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
-    gl::EnableVertexAttribArray(vbo_index);   // Vertex positions
+    // The size of the VBOs must be equal to the number of unique vertices
+    JU::uint32 num_vertices = vVertexIndices.size();
 
-    ++vbo_index;
+    JU::uint8 vbo_index = 0;
 
-    // Texture Coordinates VBO
-    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * TEX_VECTOR_SIZE * sizeof(aTexCoords[0]), aTexCoords, gl::STATIC_DRAW);
-    gl::VertexAttribPointer(vbo_index, TEX_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
-    gl::EnableVertexAttribArray(vbo_index);   // Vertex texture coordinates
+    // VERTEX POSITIONS
+    if (vPositions.size())
+    {
+        float *aPositions   = new float [num_vertices * POSITION_VECTOR_SIZE];
 
-    ++vbo_index;
+        for (JU::uint32 index = 0; index < num_vertices; ++index)
+        {
+            aPositions[index * POSITION_VECTOR_SIZE + 0] = vPositions[vVertexIndices[index].position_].x;
+            aPositions[index * POSITION_VECTOR_SIZE + 1] = vPositions[vVertexIndices[index].position_].y;
+            aPositions[index * POSITION_VECTOR_SIZE + 2] = vPositions[vVertexIndices[index].position_].z;
+        }
 
-    // Normal VBO
-    gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    gl::BufferData(gl::ARRAY_BUFFER, num_vertices * NORMAL_VECTOR_SIZE * sizeof(aNormals[0]), aNormals, gl::STATIC_DRAW);
-    gl::VertexAttribPointer(vbo_index, NORMAL_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
-    gl::EnableVertexAttribArray(vbo_index);   // Vertex normals
+        // Position VBO
+        gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+        gl::BufferData(gl::ARRAY_BUFFER, num_vertices * POSITION_VECTOR_SIZE * sizeof(aPositions[0]), aPositions, gl::STATIC_DRAW);
+        gl::VertexAttribPointer(GLSLProgram::POSITION_ATTRIBUTE_LOCATION, POSITION_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+        gl::EnableVertexAttribArray(GLSLProgram::POSITION_ATTRIBUTE_LOCATION);   // Vertex positions
 
-    ++vbo_index;
+        delete [] aPositions;
 
-    // Load Tangents
-    if (load_tangents)
+        ++vbo_index;
+    }
+
+    // VERTEX NORMALS
+    if (vNormals.size())
+    {
+        float *aNormals     = new float [num_vertices * NORMAL_VECTOR_SIZE];
+
+        for (JU::uint32 index = 0; index < num_vertices; ++index)
+        {
+            aNormals[index * NORMAL_VECTOR_SIZE + 0] = vNormals[vVertexIndices[index].normal_].x;
+            aNormals[index * NORMAL_VECTOR_SIZE + 1] = vNormals[vVertexIndices[index].normal_].y;
+            aNormals[index * NORMAL_VECTOR_SIZE + 2] = vNormals[vVertexIndices[index].normal_].z;
+        }
+
+        // Normal VBO
+        gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+        gl::BufferData(gl::ARRAY_BUFFER, num_vertices * NORMAL_VECTOR_SIZE * sizeof(aNormals[0]), aNormals, gl::STATIC_DRAW);
+        gl::VertexAttribPointer(GLSLProgram::NORMAL_ATTRIBUTE_LOCATION, NORMAL_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+        gl::EnableVertexAttribArray(GLSLProgram::NORMAL_ATTRIBUTE_LOCATION);   // Vertex normals
+
+        delete [] aNormals;
+
+        ++vbo_index;
+    }
+
+    // VERTEX TEXTURE COORDINATES
+    if (vTexCoords.size())
+    {
+        float *aTexCoords   = new float [num_vertices * TEX_VECTOR_SIZE];
+
+        for (JU::uint32 index = 0; index < num_vertices; ++index)
+        {
+            aTexCoords[index * TEX_VECTOR_SIZE + 0] = vTexCoords[vVertexIndices[index].tex_].s;
+            aTexCoords[index * TEX_VECTOR_SIZE + 1] = vTexCoords[vVertexIndices[index].tex_].t;
+        }
+
+        // Texture Coordinates VBO
+        gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
+        gl::BufferData(gl::ARRAY_BUFFER, num_vertices * TEX_VECTOR_SIZE * sizeof(aTexCoords[0]), aTexCoords, gl::STATIC_DRAW);
+        gl::VertexAttribPointer(GLSLProgram::TEXCOORD_ATTRIBUTE_LOCATION, TEX_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+        gl::EnableVertexAttribArray(GLSLProgram::TEXCOORD_ATTRIBUTE_LOCATION);   // Vertex texture coordinates
+
+        delete [] aTexCoords;
+
+        ++vbo_index;
+    }
+
+    if (vTangents.size())
     {
         float *aTangents = new float [num_vertices * TANGENT_VECTOR_SIZE];
 
         for (JU::uint32 index = 0; index < num_vertices; ++index)
         {
-    		aTangents[index * TANGENT_VECTOR_SIZE + 0] = vTangents[index].x;
-    		aTangents[index * TANGENT_VECTOR_SIZE + 1] = vTangents[index].y;
-    		aTangents[index * TANGENT_VECTOR_SIZE + 2] = vTangents[index].z;
-    		aTangents[index * TANGENT_VECTOR_SIZE + 3] = vTangents[index].w;
+            aTangents[index * TANGENT_VECTOR_SIZE + 0] = vTangents[index].x;
+            aTangents[index * TANGENT_VECTOR_SIZE + 1] = vTangents[index].y;
+            aTangents[index * TANGENT_VECTOR_SIZE + 2] = vTangents[index].z;
+            aTangents[index * TANGENT_VECTOR_SIZE + 3] = vTangents[index].w;
         }
 
-        // Normal VBO
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo_handles_[vbo_index]);
         gl::BufferData(gl::ARRAY_BUFFER, num_vertices * TANGENT_VECTOR_SIZE * sizeof(aTangents[0]), aTangents, gl::STATIC_DRAW);
-        gl::VertexAttribPointer(vbo_index, TANGENT_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
-        gl::EnableVertexAttribArray(vbo_index);   // Vertex tangents
+        gl::VertexAttribPointer(GLSLProgram::TANGENT_ATTRIBUTE_LOCATION, TANGENT_VECTOR_SIZE, gl::FLOAT, gl::FALSE_, 0, (GLubyte *)NULL);
+        gl::EnableVertexAttribArray(GLSLProgram::TANGENT_ATTRIBUTE_LOCATION);   // Vertex tangents
 
         delete [] aTangents;
 
         ++vbo_index;
     }
 
-    // Load the INDICES
-    num_triangles_ = vTriangleIndices.size();
-    JU::uint16* aIndices = new JU::uint16[num_triangles_ * 3];
-
-    for (JU::uint32 triangle = 0; triangle < num_triangles_; ++triangle)
+    if (vTriangleIndices.size())
     {
-    	aIndices[triangle * 3 + 0] = vTriangleIndices[triangle].v0_;
-    	aIndices[triangle * 3 + 1] = vTriangleIndices[triangle].v1_;
-    	aIndices[triangle * 3 + 2] = vTriangleIndices[triangle].v2_;
+        num_triangles_ = vTriangleIndices.size();
+        JU::uint16* aIndices = new JU::uint16[num_triangles_ * 3];
+
+        for (JU::uint32 triangle = 0; triangle < num_triangles_; ++triangle)
+        {
+            aIndices[triangle * 3 + 0] = vTriangleIndices[triangle].v0_;
+            aIndices[triangle * 3 + 1] = vTriangleIndices[triangle].v1_;
+            aIndices[triangle * 3 + 2] = vTriangleIndices[triangle].v2_;
+        }
+
+        // Allocate and initialize VBO for vertex indices
+        gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[vbo_index]);
+        gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, num_triangles_ * 3 * sizeof(aIndices[0]), aIndices, gl::STATIC_DRAW);
+
+        delete [] aIndices;
     }
-
-    // Allocate and initialize VBO for vertex indices
-    gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, vbo_handles_[vbo_index]);
-    gl::BufferData(gl::ELEMENT_ARRAY_BUFFER, num_triangles_ * 3 * sizeof(aIndices[0]), aIndices, gl::STATIC_DRAW);
-
-    // Clean up
-    delete [] aPositions;
-    delete [] aNormals;
-    delete [] aTexCoords;
-    delete [] aIndices;
 
     is_initialized_ = true;
 
