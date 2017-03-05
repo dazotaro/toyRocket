@@ -46,9 +46,14 @@ class GLMeshInstance : public DrawInterface
 
         void addColorTexture(const std::string &texture_name);
         void addNormalTexture(const std::string &texture_name);
+
+        // Setters
         void setMesh(const GLMesh* mesh);
         void setScale(JU::f32 x, JU::f32 y, JU::f32 z);
         void setMaterial(const Material* material);
+
+        // Getters
+        void getScale(JU::f32& x, JU::f32& y, JU::f32& z) const;
 
         void draw(const GLSLProgram &program,
         		  const glm::mat4 & model,

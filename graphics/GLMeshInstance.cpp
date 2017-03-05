@@ -109,6 +109,20 @@ void GLMeshInstance::setMaterial(const Material* material)
 }
 
 
+/**
+* @brief Set scale factors
+*
+* @param x X scale factor
+* @param y Y scale factor
+* @param z Z scale factor
+*/
+void GLMeshInstance::getScale(JU::f32& x, JU::f32& y, JU::f32& z) const
+{
+    x = scaleX_;
+    y = scaleY_;
+    z = scaleZ_;
+}
+
 
 /**
 * @brief Destructor
