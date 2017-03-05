@@ -891,7 +891,7 @@ void ShapeHelper2::buildTorus(VectorPositions&  	  vPositions,
     const float TUBE_RADIUS		(radius);					// Radius of the tube
     const float TORUS_RADIUS  	(0.5f - TUBE_RADIUS);       // Distance from the origin (center of the torus) to the center of a section
     const float DELTA_THETA 	(2 * M_PI / num_slices1);  	// Increment of the angle from slice to slice
-    const float DELTA_PHI 		(2 * M_PI / num_slices2);      	// Increment of the angle within a slice
+    const float DELTA_PHI 		(2 * M_PI / num_slices2);   // Increment of the angle within a slice
     const float DELTA_S			(1.0F / num_slices1);		// Increment of the s texture coordinate
     const float DELTA_T			(1.0F / num_slices2);		// Increment of the s texture coordinate
 
