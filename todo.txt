@@ -1,3 +1,7 @@
+ - Objects (e.g. bubble, octree) should be able to compile, link and use a GLSLProgram directly. Right now the GLScene object owns the map of GLSLPrograms, and all objects must be given a GLSLProgram object to render themselves. This is somewhat limiting.
+ - Remove/fix the 'DrawInterface' interface. Right now each object is given the 'view', 'projection' matrices for rendering, but these should probably be set for the whole scene (as uniform blocks), so the object, especially if already has access to the appropriate GLSLProgram, would not need to get all this info. The interface would have a 'draw' pure virtual function to ensure that 'drawable' objects can be put in the same container for rendering.
+ - If we want to batch objects by the GLSLProgram (to avoid state changes), we could have a renderer object that holds the GLSLPrograms, and has a data structure that connects the programs to the objects to be rendered with them. So when it's time to render, it processes the objects linked to a given program all at the same time.
+ 
  - Port changes from experimental 'buildTerrain' to toyRocket
  - Use Skyline algorithm to build level
  - Add 'Registry' singleton to handle *Managers
