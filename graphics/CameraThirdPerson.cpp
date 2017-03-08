@@ -54,7 +54,14 @@ CameraThirdPerson::~CameraThirdPerson()
 */
 void CameraThirdPerson::update(const Object3D &target)
 {
-    setFrameSpherical(target);
+    //setFrameSpherical(target);
+
+    glm::vec3 forward = glm::normalize(-target.getZAxis());
+    glm::vec3 up = glm::normalize(target.getYAxis());
+    setPosition(target.getPosition() - forward * distance_to_target_+ up * 2.0f);
+    setXAxis(target.getXAxis());
+    setYAxis(target.getYAxis());
+    setZAxis(target.getZAxis());
 }
 
 
