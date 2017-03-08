@@ -53,9 +53,11 @@ bool GameManager::initialize()
 
 	// KEYBOARD
 	// --------
+	Keyboard* pkeyboard = JU::Singleton<Keyboard>::getInstance();
+	pkeyboard->reset();
 	// Register window resize event
-	SDL_event_manager_->attachEventHandler(SDL_KEYDOWN, "Keydown", &keyboard_);
-	SDL_event_manager_->attachEventHandler(SDL_KEYUP, 	"Keyup",   &keyboard_);
+	SDL_event_manager_->attachEventHandler(SDL_KEYDOWN, "Keydown", pkeyboard);
+	SDL_event_manager_->attachEventHandler(SDL_KEYUP, 	"Keyup",   pkeyboard);
 
 	// GAME STATE MANAGER
 	// ------------------
@@ -116,7 +118,6 @@ void GameManager::loop()
 		// For debugging purposes
 		SystemLog::printAllLogs();
 		SystemLog::clarAllLogs();
-		keyboard_.printKeyboard();
 	}
 	state_manager_.exit();
 }

@@ -35,7 +35,6 @@ class GameManager
         GameStateManager state_manager_;
         Window           window_;
         SDLEventManager* SDL_event_manager_;
-        Keyboard 		 keyboard_;
 
         bool			 running_;
 };
