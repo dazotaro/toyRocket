@@ -106,7 +106,7 @@ void GameManager::loop()
         /* FPS ESTIMATION: END */
 
 		SDL_event_manager_->update();
-		if (SDL_event_manager_->quitting())
+		if (SDL_event_manager_->quitting() || Singleton<Keyboard>::getInstance()->isKeyDown(SDL_SCANCODE_ESCAPE))
 		{
 			running_ = false;
 			break;
