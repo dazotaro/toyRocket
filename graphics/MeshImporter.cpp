@@ -144,7 +144,6 @@ bool MeshImporter::import(const char* filename, Mesh2& mesh)
         mesh.setTriangleIndices(vTriangleIndices);
     }
 
-
     // We're done. Everything will be cleaned up by the importer destructor
     return true;
 }
