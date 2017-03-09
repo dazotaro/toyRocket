@@ -10,8 +10,8 @@
 namespace JU
 {
 
-CameraFirstPerson::CameraFirstPerson(const CameraIntrinsic &camera_intrinsic, const Object3D &first_person) :
-        Object3D(first_person), intrinsic_(camera_intrinsic)
+CameraFirstPerson::CameraFirstPerson(const CameraIntrinsic &camera_intrinsic, const Transform3D &first_person) :
+        Transform3D(first_person), intrinsic_(camera_intrinsic)
 {
 }
 
@@ -20,7 +20,7 @@ CameraFirstPerson::~CameraFirstPerson()
     // TODO Auto-generated destructor stub
 }
 
-void CameraFirstPerson::update(const Object3D &object)
+void CameraFirstPerson::update(const Transform3D &object)
 {
     glm::vec3 position_;    //!< Position of the object (in the parent's coordinate system)
     glm::vec3 x_axis_;      //!< back-to-front axis (in the parent's coordinate system)

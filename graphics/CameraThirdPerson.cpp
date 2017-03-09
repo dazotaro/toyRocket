@@ -23,7 +23,7 @@ namespace JU
 {
 
 CameraThirdPerson::CameraThirdPerson(const CameraIntrinsic &camera_intrinsic,
-                                     const Object3D &target,
+                                     const Transform3D &target,
                                      JU::f32 distance_to_target,
                                      //JU::f32 height_to_target,
                                      JU::f32 azimuth,
@@ -52,7 +52,7 @@ CameraThirdPerson::~CameraThirdPerson()
 *
 * @param target The frame of the target the camera is tracking
 */
-void CameraThirdPerson::update(const Object3D &target)
+void CameraThirdPerson::update(const Transform3D &target)
 {
     //setFrameSpherical(target);
 
@@ -71,7 +71,7 @@ void CameraThirdPerson::update(const Object3D &target)
 *
 * @param target The frame of the target the camera is tracking
 */
-void CameraThirdPerson::update(const Object3D &target, JU::f32 distance_delta, JU::f32 inclination_delta, JU::f32 azimuth_delta)
+void CameraThirdPerson::update(const Transform3D &target, JU::f32 distance_delta, JU::f32 inclination_delta, JU::f32 azimuth_delta)
 {
     distance_to_target_ += distance_delta;
     inclination_        += inclination_delta;
@@ -90,7 +90,7 @@ void CameraThirdPerson::update(const Object3D &target, JU::f32 distance_delta, J
 * @param angle              Angle to rotate (in radians)
 * @param axis               Axis of rotation
 */
-void CameraThirdPerson::update(const Object3D &target, JU::f32 distance_delta, JU::f32 angle, const glm::vec3& axis)
+void CameraThirdPerson::update(const Transform3D &target, JU::f32 distance_delta, JU::f32 angle, const glm::vec3& axis)
 {
 	static const JU::f32 epsilon = 0.01f;
 
@@ -130,11 +130,11 @@ void CameraThirdPerson::update(const Object3D &target, JU::f32 distance_delta, J
 }
 
 /**
-* @brief Updated the Object3D that the camera is.
+* @brief Updated the Transform3D that the camera is.
 *
 * @param target The frame of the target the camera is tracking
 */
-void CameraThirdPerson::setFrameSpherical(const Object3D &target)
+void CameraThirdPerson::setFrameSpherical(const Transform3D &target)
 {
     glm::vec3 point_on_sphere;      // given the spherical coordinates compute the cartesian ones for that point on the sphere
     CoordinateHelper::spherical2cartesian(distance_to_target_, inclination_, azimuth_, point_on_sphere[0], point_on_sphere[1], point_on_sphere[2]);

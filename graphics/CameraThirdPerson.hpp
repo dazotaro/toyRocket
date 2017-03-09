@@ -11,7 +11,7 @@
 // Local includes
 #include "CameraInterface.hpp"      // CameraInterface parent class
 #include "CameraIntrinsic.hpp"      // CamneraIntrinsic object contained
-#include "../core/Object3D.hpp"     // Object3D
+#include "../core/Transform3D.hpp"     // Transform3D
 #include "../core/Defs.hpp"         // JU::f32
 
 // Global includes
@@ -24,13 +24,13 @@ namespace JU
 /**
  * @brief   Third-person camera type
  *
- * \todo    Maybe it should not inherit from Object3D but, instead, it should just contain a pointer to a Object3D
+ * \todo    Maybe it should not inherit from Transform3D but, instead, it should just contain a pointer to a Transform3D
  */
-class CameraThirdPerson : public CameraInterface, public Object3D
+class CameraThirdPerson : public CameraInterface, public Transform3D
 {
     public:
         CameraThirdPerson(const CameraIntrinsic &camera_intrinsic,
-                          const Object3D &target,
+                          const Transform3D &target,
                           JU::f32 distance_to_target = 10.0f,
                           JU::f32 azimuth = 0.0f,
                           JU::f32 inclination = M_PI / 2.0f);
@@ -39,18 +39,18 @@ class CameraThirdPerson : public CameraInterface, public Object3D
         virtual ~CameraThirdPerson();
 
         // CameraInterface
-        void update(const Object3D &object_3d);
+        void update(const Transform3D &object_3d);
         const glm::mat4& getPerspectiveMatrix(void) const;
         glm::mat4 getViewMatrix(void) const;
         void setAspectRatio(JU::f32 aspect_ratio);
 
         // Setters
-        void update(const Object3D &target, JU::f32 distance_delta, JU::f32 inclination_delta, JU::f32 azimuth_delta);
-        void update(const Object3D &target, JU::f32 distance_delta, JU::f32 angle, const glm::vec3& axis);
+        void update(const Transform3D &target, JU::f32 distance_delta, JU::f32 inclination_delta, JU::f32 azimuth_delta);
+        void update(const Transform3D &target, JU::f32 distance_delta, JU::f32 angle, const glm::vec3& axis);
 
         // Algorithms
-        void setFrameCartesian(const Object3D &target);
-        void setFrameSpherical(const Object3D &target);
+        void setFrameCartesian(const Transform3D &target);
+        void setFrameSpherical(const Transform3D &target);
 
     private:
         CameraIntrinsic intrinsic_;     //!< Intrinsic parameters of the camera

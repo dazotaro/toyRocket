@@ -1,12 +1,12 @@
 /*
- * Object3D.cpp
+ * Transform3D.cpp
  *
  *  Created on: May 7, 2013
  *      Author: jusabiaga
  */
 
 // Local includes
-#include "Object3D.hpp"
+#include "Transform3D.hpp"
 
 // Global includes
 #define GLM_SWIZZLE
@@ -27,7 +27,7 @@ namespace JU
 *   + Z axis      = parent's Z axis
 */
 /*
-Object3D::Object3D() :
+Transform3D::Transform3D() :
     position_           (glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)),
     x_axis_  (glm::vec4(1.0f, 0.0f, 0.0f, 0.0f)),
     y_axis_      (glm::vec4(0.0f, 1.0f, 0.0f, 0.0f)),
@@ -49,7 +49,7 @@ Object3D::Object3D() :
 * @param y_axis     Object's Y axis
 * @param z_axis     Object's Z axis
 */
-Object3D::Object3D(const glm::vec3 &position,
+Transform3D::Transform3D(const glm::vec3 &position,
                    const glm::vec3 &x_axis,
                    const glm::vec3 &y_axis,
                    const glm::vec3 &z_axis) :
@@ -63,7 +63,7 @@ Object3D::Object3D(const glm::vec3 &position,
 /**
 * @brief Destructor
 */
-Object3D::~Object3D()
+Transform3D::~Transform3D()
 {
     // TODO Auto-generated destructor stub
 }
@@ -71,7 +71,7 @@ Object3D::~Object3D()
 /**
 * @brief Setter function
 */
-void Object3D::setPosition(const glm::vec3 &position)
+void Transform3D::setPosition(const glm::vec3 &position)
 {
     position_ = position;
 }
@@ -79,7 +79,7 @@ void Object3D::setPosition(const glm::vec3 &position)
 /**
 * @brief Setter function
 */
-void Object3D::setXAxis(const glm::vec3 &x_axis)
+void Transform3D::setXAxis(const glm::vec3 &x_axis)
 {
     x_axis_ = x_axis;
 }
@@ -87,7 +87,7 @@ void Object3D::setXAxis(const glm::vec3 &x_axis)
 /**
 * @brief Setter function
 */
-void Object3D::setYAxis(const glm::vec3 &y_axis)
+void Transform3D::setYAxis(const glm::vec3 &y_axis)
 {
     y_axis_ = y_axis;
 }
@@ -95,7 +95,7 @@ void Object3D::setYAxis(const glm::vec3 &y_axis)
 /**
 * @brief Setter function
 */
-void Object3D::setZAxis(const glm::vec3 &z_axis)
+void Transform3D::setZAxis(const glm::vec3 &z_axis)
 {
     z_axis_ = z_axis;
 }
@@ -105,7 +105,7 @@ void Object3D::setZAxis(const glm::vec3 &z_axis)
 *
 * @param translate Displacement
 */
-void Object3D::translate(const glm::vec3 &translate)
+void Transform3D::translate(const glm::vec3 &translate)
 {
     position_ += translate;
 }
@@ -115,7 +115,7 @@ void Object3D::translate(const glm::vec3 &translate)
 *
 * @param angle Angle to rotate (in degrees)
 */
-void Object3D::rotateX(JU::f32 angle)
+void Transform3D::rotateX(JU::f32 angle)
 {
     glm::mat4 rotate = glm::rotate(angle, x_axis_);
 
@@ -129,7 +129,7 @@ void Object3D::rotateX(JU::f32 angle)
 *
 * @param angle Angle to rotate (in degrees)
 */
-void Object3D::rotateY(JU::f32 angle)
+void Transform3D::rotateY(JU::f32 angle)
 {
     glm::mat4 rotate = glm::rotate(angle, y_axis_);
 
@@ -142,7 +142,7 @@ void Object3D::rotateY(JU::f32 angle)
 *
 * @param angle Angle to rotate (in degrees)
 */
-void Object3D::rotateZ(JU::f32 angle)
+void Transform3D::rotateZ(JU::f32 angle)
 {
     glm::mat4 rotate = glm::rotate(angle, z_axis_);
 
@@ -158,7 +158,7 @@ void Object3D::rotateZ(JU::f32 angle)
 * @param angle Angle to rotate (in degrees)
 * @param axis  Axis of rotation
 */
-void Object3D::rotate(JU::f32 angle, const glm::vec3& axis)
+void Transform3D::rotate(JU::f32 angle, const glm::vec3& axis)
 {
     glm::mat4 rotation = glm::rotate(angle, axis);
 
@@ -173,7 +173,7 @@ void Object3D::rotate(JU::f32 angle, const glm::vec3& axis)
 *
 * @return 4x4 Homogeneous transformation matrix
 */
-glm::mat4 Object3D::getTransformToParent(void) const
+glm::mat4 Transform3D::getTransformToParent(void) const
 {
     return glm::mat4(  x_axis_.x,   x_axis_.y,   x_axis_.z, 0.0f,
                        y_axis_.x,   y_axis_.y,   y_axis_.z, 0.0f,
@@ -186,7 +186,7 @@ glm::mat4 Object3D::getTransformToParent(void) const
 *
 * @return 4x4 Homogeneous transformation matrix
 */
-glm::mat4 Object3D::getTransformFromParent(void) const
+glm::mat4 Transform3D::getTransformFromParent(void) const
 {
     JU::f32 x_dot = glm::dot(x_axis_, position_);
     JU::f32 y_dot = glm::dot(y_axis_, position_);
@@ -203,11 +203,11 @@ glm::mat4 Object3D::getTransformFromParent(void) const
 * @brief Overloaded output operator
 *
 * @param out            Output stream
-* @param rhs            Instance of Object3D to output
+* @param rhs            Instance of Transform3D to output
 *
 * @return std::ostream object
 */
-std::ostream & operator<<(std::ostream &out, const Object3D &rhs)
+std::ostream & operator<<(std::ostream &out, const Transform3D &rhs)
 {
     out << "Position = (" << rhs.position_.x << ", " << rhs.position_.y << ", " << rhs.position_.z << ")" << std::endl;
     out << "X Axis   = (" <<   rhs.x_axis_.x << ", " <<   rhs.x_axis_.y << ", " <<   rhs.x_axis_.z << ")" << std::endl;

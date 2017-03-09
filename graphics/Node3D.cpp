@@ -16,15 +16,15 @@ namespace JU
 *
 * @detail Perform intentional shallow copies of pointers. It is the responsability of the caller to delete dynamically allocated parameters
 *
-* @param object         Object3D containing the position and orientation of this node in the parent coordinate system
+* @param object         Transform3D containing the position and orientation of this node in the parent coordinate system
 * @param node_drawable  Pointer to the object with the info to draw this node
 * @param children       Vector with pointers to the children nodes
 * @param visible        Even if the node_drawable pointer is not null, it exits the possibility that, at some point, we might not want to draw this node
 */
-Node3D::Node3D(const Object3D &object,
+Node3D::Node3D(const Transform3D &object,
                const DrawInterface *node_drawable,
                bool visible) :
-               Object3D(object), node_drawable_(node_drawable), visible_(visible)
+               Transform3D(object), node_drawable_(node_drawable), visible_(visible)
 {
 }
 

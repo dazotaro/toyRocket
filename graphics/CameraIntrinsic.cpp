@@ -14,9 +14,8 @@ namespace JU
 /**
 * @brief Non-Default Constructor
 *
-* @param object         Object3D containing the position and orientation of this node in the parent coordinate system
 * @param fovy           Vertical field-of-view
-* @param aspect_ration  Width divided by height
+* @param aspect_ratio   Width divided by height
 * @param zNear          Distance from the COP to the Near Plane
 * @param zFar           Distance from the COP to the Far Plane
 */
