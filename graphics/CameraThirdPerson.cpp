@@ -168,16 +168,6 @@ void CameraThirdPerson::setFrameSpherical(const Transform3D &target)
 }
 
 /**
-* @brief Return the perspective matrix
-*
-* @return The perspective matrix
-*/
-const glm::mat4& CameraThirdPerson::getPerspectiveMatrix(void) const
-{
-    return intrinsic_.getPerspectiveMatrix();
-}
-
-/**
 * @brief Return the view matrix
 *
 * @return Return the view matrix
@@ -186,19 +176,6 @@ glm::mat4 CameraThirdPerson::getViewMatrix(void) const
 {
     return getTransformFromParent();
 }
-
-
-
-/**
-* @brief Updated the aspect ratio
-*
-* @param aspect_ratio_ The new aspect ratio (width / height)
-*/
-void CameraThirdPerson::setAspectRatio(JU::f32 aspect_ratio)
-{
-    intrinsic_.setAspectRatio(aspect_ratio);
-}
-
 } // namespace JU
 
 

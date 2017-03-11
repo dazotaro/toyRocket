@@ -8,7 +8,6 @@
 #ifndef CAMERAFIRSTPERSON_HPP_
 #define CAMERAFIRSTPERSON_HPP_
 
-#include "CameraInterface.hpp"      // CameraInterface parent class
 #include "CameraIntrinsic.hpp"      // CameraIntrinsic object contained
 #include "../core/Transform3D.hpp"     // Transform3D
 
@@ -21,7 +20,7 @@ namespace JU
  *
  * @detail  It implements the CameraInterface interface
  */
-class CameraFirstPerson : public CameraInterface, public Transform3D
+class CameraFirstPerson : public Transform3D
 {
     public:
         CameraFirstPerson(const CameraIntrinsic &camera_intrinsic, const Transform3D &first_person);
@@ -29,11 +28,9 @@ class CameraFirstPerson : public CameraInterface, public Transform3D
 
         // CameraInterface
         void update(const Transform3D &first_person);
-        const glm::mat4& getPerspectiveMatrix(void) const;
         glm::mat4 getViewMatrix(void) const;
-        void setAspectRatio(float aspect_ratio);
 
-    private:
+    public:
         CameraIntrinsic intrinsic_;     //!< Intrinsic parameters of this camera
 };
 

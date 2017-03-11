@@ -33,24 +33,9 @@ void CameraFirstPerson::update(const Transform3D &object)
     z_axis_   = object.getZAxis();
 }
 
-const glm::mat4& CameraFirstPerson::getPerspectiveMatrix(void) const
-{
-    return intrinsic_.getPerspectiveMatrix();
-}
-
 glm::mat4 CameraFirstPerson::getViewMatrix(void) const
 {
     return getTransformFromParent();
-}
-
-/**
-* @brief Updated the aspect ratio
-*
-* @param aspect_ratio_ The new aspect ratio (width / height)
-*/
-void CameraFirstPerson::setAspectRatio(float aspect_ratio)
-{
-    intrinsic_.setAspectRatio(aspect_ratio);
 }
 
 } // namespace JU

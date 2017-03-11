@@ -9,7 +9,6 @@
 #define CAMERATHIRDPERSON_HPP_
 
 // Local includes
-#include "CameraInterface.hpp"      // CameraInterface parent class
 #include "CameraIntrinsic.hpp"      // CamneraIntrinsic object contained
 #include "../core/Transform3D.hpp"     // Transform3D
 #include "../core/Defs.hpp"         // JU::f32
@@ -26,7 +25,7 @@ namespace JU
  *
  * \todo    Maybe it should not inherit from Transform3D but, instead, it should just contain a pointer to a Transform3D
  */
-class CameraThirdPerson : public CameraInterface, public Transform3D
+class CameraThirdPerson : public Transform3D
 {
     public:
         CameraThirdPerson(const CameraIntrinsic &camera_intrinsic,
@@ -40,9 +39,7 @@ class CameraThirdPerson : public CameraInterface, public Transform3D
 
         // CameraInterface
         void update(const Transform3D &object_3d);
-        const glm::mat4& getPerspectiveMatrix(void) const;
         glm::mat4 getViewMatrix(void) const;
-        void setAspectRatio(JU::f32 aspect_ratio);
 
         // Setters
         void update(const Transform3D &target, JU::f32 distance_delta, JU::f32 inclination_delta, JU::f32 azimuth_delta);
@@ -52,8 +49,10 @@ class CameraThirdPerson : public CameraInterface, public Transform3D
         void setFrameCartesian(const Transform3D &target);
         void setFrameSpherical(const Transform3D &target);
 
-    private:
+    public:
         CameraIntrinsic intrinsic_;     //!< Intrinsic parameters of the camera
+
+    private:
         JU::f32 distance_to_target_;      //!< Distance to the target (i.e. radius of the sphere in spherical coordinates
         JU::f32 azimuth_;                 //!< Azimuth angle in spherical coordinates
         JU::f32 inclination_;             //!< Inclination angle in spherical coordinates
