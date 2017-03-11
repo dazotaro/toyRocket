@@ -76,7 +76,6 @@ bool GameManager::initialize()
 void GameManager::loop()
 {
 	// FPS Calculation
-	uint32 counted_frames = 0;
 	Timer timer;
 	timer.start();
 
@@ -84,26 +83,6 @@ void GameManager::loop()
 	{
 		uint32 time = timer.getTicks();
 		timer.start();
-
-		/* FPS ESTIMATION: START */
-		static uint32 time_for_fps = 0;
-		time_for_fps += time;
-		if (time_for_fps > 1000)
-		{
-			//Calculate and correct fps
-			float avgFPS = counted_frames  * 1000.0f / time_for_fps;
-			if( avgFPS > 2000000 )
-			{
-				avgFPS = 0;
-			}
-
-			std::printf("FPS = %f\n", avgFPS);
-			time_for_fps = 0;
-			counted_frames = 0;
-		}
-		else
-			counted_frames++;
-        /* FPS ESTIMATION: END */
 
 		SDL_event_manager_->update();
 		if (SDL_event_manager_->quitting() || Singleton<Keyboard>::getInstance()->isKeyDown(SDL_SCANCODE_ESCAPE))
