@@ -34,7 +34,7 @@ bool GameManager::initialize()
 {
 	// WINDOW
 	// ------
-	if (!window_.initialize(800, 800))
+	if (!window_.initialize(1280, 720))
 	{
 		std::printf("Window failed to initialize!!!\n");
 		return false;
