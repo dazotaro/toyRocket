@@ -8,7 +8,10 @@
 #ifndef CAMERAINTRINSIC_HPP_
 #define CAMERAINTRINSIC_HPP_
 
+// Global includes
 #include <glm/glm.hpp>      // glm::mat4
+// Local includes
+#include "../core/Defs.hpp" // built-in data types typedefs
 
 namespace JU
 {
@@ -22,20 +25,21 @@ namespace JU
 class CameraIntrinsic
 {
     public:
-        CameraIntrinsic(float fovy, float aspect_ratio, float zNear, float zFar);
+        CameraIntrinsic(f32 fovy, f32 aspect_ratio, f32 zNear, f32 zFar);
         virtual ~CameraIntrinsic();
 
         // Getters
         const glm::mat4& getPerspectiveMatrix(void) const;
 
         // Setters
-        void setAspectRatio(float aspect_ratio);
+        void setAspectRatio(f32 aspect_ratio);
+        void setVerticalFOY(f32 fov);
 
     private:
-        float fovy_;            //!< Field of View in the Y axis (in degrees)
-        float aspect_ratio_;    //!< Aspect ratio
-        float zNear_;           //!< Near plane
-        float zFar_;            //!< Far plane
+        f32 fovy_;            //!< Field of View in the Y axis (in radians)
+        f32 aspect_ratio_;    //!< Aspect ratio
+        f32 zNear_;           //!< Near plane
+        f32 zFar_;            //!< Far plane
         glm::mat4 perspective_; //!< Perspective matrix
 };
 
