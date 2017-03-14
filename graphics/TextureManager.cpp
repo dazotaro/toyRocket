@@ -63,11 +63,9 @@ bool TextureManager::loadTexture(const std::string &texture_name, const std::str
     gl::BindTexture(gl::TEXTURE_2D, texture_map_[texture_name]);
     gl::TexImage2D(gl::TEXTURE_2D, 0, mode, width, height, 0, mode, gl::UNSIGNED_BYTE, image);
 
-    GLfloat filtering_mode = gl::NEAREST;
 
-
-    //GLfloat filtering_mode = gl::LINEAR_MIPMAP_LINEAR;
-    //glGenerateMipmap(gl::TEXTURE_2D);
+    GLfloat filtering_mode = gl::LINEAR_MIPMAP_LINEAR;
+    gl::GenerateMipmap(gl::TEXTURE_2D);
 
 
     gl::TexParameterf(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, filtering_mode);
