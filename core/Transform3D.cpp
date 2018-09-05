@@ -11,6 +11,7 @@
 // Global includes
 #define GLM_SWIZZLE
 #include <glm/gtc/matrix_transform.hpp>     // glm::rotate, glm::translate
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform2.hpp>           // glm::rotate, glm::translate
 
 
